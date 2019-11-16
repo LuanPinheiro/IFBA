@@ -3,13 +3,12 @@
 
 int main()
 {
-    //valor de options em 20 para iniciar o while
-    int options=20;
+    //valor de options em 1 para iniciar o while
+    int options=1, qtdAlunos=0, qtdProf=0,qtdDisc;
 
     while (options!=0)
     {
-        printf("Escolha uma das ações abaixo:\n\n");
-
+        printf("Escolha uma das opcoes abaixo:\n\n");
         printf("(1) Cadastrar um aluno\n");
         printf("(2) Cadastrar um professor\n");
         printf("(3) Cadastrar uma disciplina\n");
@@ -30,10 +29,17 @@ int main()
         switch(options)
         {
             case 0: return 0; break;
-            case 1: /*cadastroAluno();*/ break;
-            case 2: /*cadastroProfessor();*/ break;
-            case 3: /*cadastroDisciplina();*/ break;
+            case 1: /*cadastroAluno();*/
+                    qtdAlunos++;
+                     break;
+            case 2: /*cadastroProfessor();*/
+                    qtdProf++;
+                    break;
+            case 3: /*cadastroDisciplina();*/
+                    qtdDisc++;
+                    break;
             case 4: /*inserirAluno();*/ break;
+            // quando for listar enviar qtdAluno/Prof/Disc para cada respectiva função
             case 5: /*listaAluno();*/ break;
             case 6: /*listaProfessor();*/ break;
             case 7: /*listaDisciplina();*/ break;
@@ -52,5 +58,4 @@ int main()
         }
 
     }
-    return 0;
 }
