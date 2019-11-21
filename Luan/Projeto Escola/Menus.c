@@ -200,6 +200,19 @@ int validardtnasc(int d,int m,int a)
     {
         if( m<=12 &&  m>0)
         {
+        	if(m==2)
+        	{
+        		if(a%4==0 && a%100!=0)
+        		{
+        			if (d>=30)
+        				return 0;
+				}
+				else if (d>=29)
+				{
+					return 0;
+				}
+			}
+			
             if( a > 0)
                 return 1;
             else 
