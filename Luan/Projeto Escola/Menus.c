@@ -7,7 +7,7 @@
 int main()
 {
     //valor de options em 1 para iniciar o while
-    int options=1, qtdAlunos=0, qtdProf=0;// qtdDisc=0;
+    int options=1, qtdAlunos, qtdProf=0, mesAtual;;// qtdDisc=0;
     Lista_aluno Aluno[TAMANHO_LISTA];
     Lista_Prof Prof[TAMANHO_LISTA];
 
@@ -19,8 +19,9 @@ int main()
         printf("(1) Alunos\n");
         printf("(2) Professores\n");
         printf("(3) Disciplina\n");
-        printf("(4) Listar aniversariantes do mês\n");
+        printf("(4) Listar aniversariantes do mes\n");
         printf("(5) Buscar um professor ou aluno\n");
+        printf("(6) Mudar o mes atual");
         printf("(0) Fechar o programa\n\n");
 
         scanf("%d",&options);
@@ -35,6 +36,7 @@ int main()
             case 3: /*cadastroDisciplina(qtdDisc);*/ break;
             case 4: /*"Aniversariantes()*/; break;
             case 5: /*Busca(Aluno)*/; break;
+            case 6: printf("Digite o mes atual"); scanf("%d", &mesAtual); break;
             default: while(options>5)
             {
                 printf("Numero Invalido\n");

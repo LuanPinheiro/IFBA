@@ -25,5 +25,6 @@ int validarmatricula(int mat);
 int matricula_Aluno(int qtd,Lista_aluno Alunos[]);
 int menu_opcoes();
 void listar_aluno(Lista_aluno Alunos[]);
+void listar_aluno_sexo(Lista_aluno Alunos[]);
 void status_aluno(Lista_aluno Alunos[]);
 int retirar_aluno(Lista_aluno Alunos[]);

@@ -37,13 +37,19 @@ int cadastroProf(int qtdprof, Lista_Prof Professor[])//main do cadastro de profe
         }
             case 2:
             {
-                printf("###LISTA DE Professores###\n");
+                printf("###LISTA DE PROFESSORES###\n");
                 listar_Professor(Professor);
                 break;
             }
             case 3:
             {
-                printf("###REMOVER Professores###\n");
+                printf("###LISTA DE PROFESSORES POR SEXO###\n");
+                listar_Professor_sexo(Professor);
+                break;
+            }
+            case 4:
+            {
+                printf("###REMOVER PROFESSORES###\n");
                 retirar_Professor(qtdprof,Professor);
                 if(qtdprof>0)
                     qtdprof--;
@@ -51,7 +57,7 @@ int cadastroProf(int qtdprof, Lista_Prof Professor[])//main do cadastro de profe
                     printf("\n###NENHUM_PROFESSOR_CADASTRADO###\n");
                 break;
             }
-            case 4:
+            case 5:
             {
                 printf("\n###SAINDO DO CADASTRO DE PROFESSORES###\n");
                 break;
@@ -210,9 +216,10 @@ int menu_opcoesP()
     printf("Informe a opcao\n");
     printf("\n");
     printf("1.Cadastro de Professores\n");
-    printf("2.Relatórios de Professores\n");
-    printf("3.Remover Professores\n");
-    printf("4.Sair\n");
+    printf("2.Listar Professores\n");
+    printf("3.Listar Professores por Sexo\n");
+    printf("4.Remover Professores\n");
+    printf("5.Sair\n");
     scanf("%d",&op);
     return op;
 }
@@ -230,6 +237,43 @@ void listar_Professor(Lista_Prof Professores[])
             printf("Data de Nascimento : %d/%d/%d\n",Professores[x].dtnasc.dia,Professores[x].dtnasc.mes,Professores[x].dtnasc.ano);
             printf("CPF : %s\n",Professores[x].CPF);
             printf("Sexo : %c\n",Professores[x].sexo);
+            printf("\n");
+        }
+    }
+}
+
+void listar_Professor_sexo(Lista_Prof Professor[])
+{
+    int x, aux;
+    
+    printf("\nSexo Feminino:\n");
+    for(x=0,aux=1;x<TAMANHO_LISTA;x++)
+    {
+        if(Professor[x].sexo=='f' || Professor[x].sexo=='F') 
+        {
+            printf("%d. Nome: %s\n",aux,Professor[x].nome);
+            printf("\n");
+            aux++;
+        }
+    }
+    printf("\nSexo Masculino:\n");
+
+    for(x=0,aux=1;x<TAMANHO_LISTA;x++)
+    {
+        if(Professor[x].sexo=='m' || Professor[x].sexo=='M') 
+        {
+            printf("%d. Nome: %s\n",aux+1,Professor[x].nome);
+            printf("\n");
+            aux++;
+        }
+    }
+
+    printf("\nSexo Outro:\n");
+    for(x=0,aux=1;x<TAMANHO_LISTA;x++)
+    {
+        if(Professor[x].sexo=='o' || Professor[x].sexo=='O') 
+        {
+            printf("%d. Nome: %s\n",aux+1,Professor[x].nome);
             printf("\n");
         }
     }

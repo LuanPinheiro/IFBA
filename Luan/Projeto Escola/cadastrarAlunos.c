@@ -1,4 +1,4 @@
-int cadastroAluno(int qtdaluno, Lista_aluno Aluno[])//main do cadastro de alunos, qtdaluno e a struct vêm do main
+int cadastroAluno(qtdaluno, Lista_aluno Aluno[])//main do cadastro de alunos, qtdaluno e a struct vêm do main
 {
     int x;
     int opcao;
@@ -35,11 +35,17 @@ int cadastroAluno(int qtdaluno, Lista_aluno Aluno[])//main do cadastro de alunos
             }
             case 3:
             {
+                printf("###LISTA DE ALUNOS POR SEXO###\n");
+                listar_aluno_sexo(Aluno);
+                break;
+            }
+            case 4:
+            {
                 printf("###REMOVER ALUNOS###\n");
                 qtdaluno=retirar_aluno(Aluno);
                 break;
             }
-            case 4:
+            case 5:
             {
                 printf("\n###SAINDO DO CADASTRO DE ALUNOS###\n");
                 break;
@@ -196,16 +202,17 @@ int menu_opcoes()
     printf("Informe a opcao\n");
     printf("\n");
     printf("1.Cadastro de Alunos\n");
-    printf("2.Relatórios de Alunos\n");
-    printf("3.Remover Alunos\n");
-    printf("4.Voltar ao Menu Principal\n");
+    printf("2.Listar Alunos\n");
+    printf("3.Listar Alunos por Sexo\n");
+    printf("4.Remover Alunos\n");
+    printf("5.Voltar ao Menu Principal\n");
     scanf("%d",&op);
     return op;
 }
 
 void listar_aluno(Lista_aluno Alunos[])
 {
-    int x;
+    int x, aux;
     
     for(x=0;x<TAMANHO_LISTA;x++)
     {
@@ -216,6 +223,43 @@ void listar_aluno(Lista_aluno Alunos[])
             printf("Data de Nascimento : %d/%d/%d\n",Alunos[x].dtnasc.dia,Alunos[x].dtnasc.mes,Alunos[x].dtnasc.ano);
             printf("CPF : %s\n",Alunos[x].CPF);
             printf("Sexo : %c\n",Alunos[x].sexo);
+            printf("\n");
+        }
+    }
+}
+
+void listar_aluno_sexo(Lista_aluno Alunos[])
+{
+    int x, aux;
+    
+    printf("\nSexo Feminino:\n");
+    for(x=0,aux=1;x<TAMANHO_LISTA;x++)
+    {
+        if(Alunos[x].sexo=='f' || Alunos[x].sexo=='F') 
+        {
+            printf("%d. Nome: %s\n",aux,Alunos[x].nome);
+            printf("\n");
+            aux++;
+        }
+    }
+    printf("\nSexo Masculino:\n");
+
+    for(x=0,aux=1;x<TAMANHO_LISTA;x++)
+    {
+        if(Alunos[x].sexo=='m' || Alunos[x].sexo=='M') 
+        {
+            printf("%d. Nome: %s\n",aux+1,Alunos[x].nome);
+            printf("\n");
+            aux++;
+        }
+    }
+
+    printf("\nSexo Outro:\n");
+    for(x=0,aux=1;x<TAMANHO_LISTA;x++)
+    {
+        if(Alunos[x].sexo=='o' || Alunos[x].sexo=='O') 
+        {
+            printf("%d. Nome: %s\n",aux+1,Alunos[x].nome);
             printf("\n");
         }
     }
