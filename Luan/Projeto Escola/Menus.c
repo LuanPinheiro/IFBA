@@ -18,7 +18,7 @@ typedef struct cadAluno
     char sexo;
 } Lista_aluno;
 
-int cadastroAluno(int qtd);
+int cadastroAluno(int qtd, Lista_aluno Aluno[]);
 int validarnome(char nm[50]);
 int validardtnasc(int d, int m, int a);
 int validarcpf(char c[15]);
@@ -28,7 +28,7 @@ int matricula_Aluno(int qtd, Lista_aluno Alunos[]);
 int menu_opcoes();
 void listar_aluno(Lista_aluno Alunos[]);
 void status_aluno(Lista_aluno Alunos[]);
-void retirar_aluno(Lista_aluno Alunos[]);
+int retirar_aluno(Lista_aluno Alunos[]);
 
 int main()
 {
@@ -40,7 +40,7 @@ int main()
 
     while (options!=0)
     {
-        printf("Escolha uma das opcoes abaixo:\n\n");
+        printf("\nEscolha uma das opcoes abaixo:\n\n");
         printf("(1) Cadastrar um aluno\n");
         printf("(2) Cadastrar um professor\n");
         printf("(3) Cadastrar uma disciplina\n");
@@ -54,14 +54,16 @@ int main()
         printf("(11) Listar alunos por data de nascimento\n");
         printf("(12) Listar aniversariantes do mês\n");
         printf("(13) Buscar um professor ou aluno\n");
-        printf("(0) Fechar o programa\n");
+        printf("(0) Fechar o programa\n\n");
 
         scanf("%d",&options);
+        
+        printf("\n");
         
         switch(options)
         {
             case 0: return 0; break;
-            case 1: retorno = cadastroAluno(qtdAlunos);
+            case 1: retorno = cadastroAluno(qtdAlunos, Aluno);
                     if(retorno==1)
                         qtdAlunos++;
                     break;
@@ -71,7 +73,7 @@ int main()
             case 3: /*cadastroDisciplina(qtdDisc);*/
                     qtdDisc++;
                     break;
-            case 4: retirar_aluno(Aluno); break;
+            case 4: qtdAlunos=retirar_aluno(Aluno); break;
 
             // quando for listar enviar qtdAluno/Prof/Disc para cada respectiva função
             case 5: listar_aluno(Aluno); break;
@@ -94,14 +96,14 @@ int main()
     }
 }
 
-int cadastroAluno(int qtd)
+int cadastroAluno(int qtd, Lista_aluno Aluno[])
 {
     int x;
     int status_matricula;
 
     for(x=0;x<10;x++)
     {
-        status_matricula = matricula_Aluno(qtd, Lista_aluno Aluno[TAMANHO_LISTA]);
+        status_matricula = matricula_Aluno(qtd, Aluno);
         if(status_matricula==1)
         {
             printf("### MATRICULA REALIZADA COM SUCESSO###\n");
@@ -117,10 +119,19 @@ int cadastroAluno(int qtd)
    
 int matricula_Aluno(int qtd, Lista_aluno Alunos[])
 {
-    int v1,v2,v3,v4,v5;
+    int v1,v2,v3,v4,v5,ver;
+    
+     for(ver=0;ver<TAMANHO_LISTA;ver++)
+    {
+        if(Alunos[qtd].matricula!=-1)
+            qtd++;
+        else
+            break;
+    }
     
     printf("Informe a matricula do aluno\n");
     scanf("%d",&Alunos[qtd].matricula);
+    getchar();
 
     printf("Informe o nome do Aluno\n");
     fgets(Alunos[qtd].nome,50,stdin);
@@ -136,12 +147,14 @@ int matricula_Aluno(int qtd, Lista_aluno Alunos[])
     
     printf("Informe a ano do Nascimento\n");
     scanf("%d",&Alunos[qtd].dtnasc.ano);
+    getchar();
 
     printf("Informe o CPF do Aluno\n");
     fgets(Alunos[qtd].CPF,15,stdin);
     ln= strlen(Alunos[qtd].CPF)-1;
     if(Alunos[qtd].CPF[ln]=='\n')
             Alunos[qtd].CPF[ln]='\0';
+        
         
     printf("Infome o sexo do Aluno(F, M ou O)\n");
     scanf("%s",&Alunos[qtd].sexo);
@@ -175,7 +188,7 @@ int validarnome(char nm[])
 {
     int tam;
     tam=strlen(nm);
-    if(tam>20)
+    if(tam>5)
         return 1;
      else
         return 0;
@@ -244,13 +257,14 @@ void status_aluno(Lista_aluno Alunos[])
         Alunos[x].matricula = -1;
 }
 
-void retirar_aluno(Lista_aluno Alunos[])
+int retirar_aluno(Lista_aluno Alunos[])
 {
     int del;
     
-    printf("Informe o número do Aluno\n");
+    printf("Informe o numero do Aluno\n");
     listar_aluno(Alunos);
     scanf("%d",&del);
     Alunos[del-1].matricula=-1;
-    listar_aluno(Alunos);
+    del--;
+    return del;
 }
