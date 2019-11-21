@@ -53,11 +53,11 @@ int main() {
         }else{
             switch(retorno) {
                 case ERRO_CADASTRO_CODIGO:{
-                    printf("Matrícula Inválida\n");
+                    printf("Matrï¿½cula Invï¿½lida\n");
                     break;
                 }
                 case ERRO_CADASTRO_SEMESTRE:{
-                    printf("Semestre Inválido\n");
+                    printf("Semestre Invï¿½lido\n");
                     break;
                 }
                 case ERRO_LIMITE_DISCIPLINAS:{
@@ -68,7 +68,7 @@ int main() {
                    printf("Erro desconhecido!\n");
                 }
             }
-           printf("Não foi possível fazer o cadastro\n");  
+           printf("Nï¿½o foi possï¿½vel fazer o cadastro\n");  
         }    
         break;
       }
@@ -86,7 +86,7 @@ int main() {
         break;  
     }
       default:{
-        printf("Opção Inválida\n");
+        printf("Opï¿½ï¿½o Invï¿½lida\n");
 
       }
     }
@@ -98,7 +98,7 @@ int opcaoMenuDisciplinas(){
 
     int opcao;
 
-    printf("Digite a opção:\n");
+    printf("Digite a opï¿½ï¿½o:\n");
     printf("0 - Voltar a Menu Principal\n");
     printf("1 - Inserir Disciplina\n");
     printf("2 - Listar Disciplinas\n");
