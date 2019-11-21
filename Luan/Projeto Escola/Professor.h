@@ -14,3 +14,5 @@ void retirar_Professor(int qtd,Lista_Prof Professores[]);
 int matricula_Professor(int qtd,Lista_Prof Professores[]);
 int menu_opcoesP();
 int cadastroProf(int qtdprof, Lista_Prof Professor[]);
+void aniversariantesP(int mesAtual, int qtdProf, Lista_Prof Professor[]);
+void alterar_professor(Lista_Prof Professores[]);

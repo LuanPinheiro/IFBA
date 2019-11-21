@@ -1,4 +1,4 @@
-int cadastroProf(int qtdprof, Lista_Prof Professor[])//main do cadastro de professores, qtdprof e a struct vêm do main
+int cadastroProf(int qtdprof, Lista_Prof Professor[], int mesAtual)//main do cadastro de professores, qtdprof e a struct vêm do main
 {
     int opcao;
     int status_matricula;
@@ -58,6 +58,18 @@ int cadastroProf(int qtdprof, Lista_Prof Professor[])//main do cadastro de profe
                 break;
             }
             case 5:
+            {
+                printf("\n###ANIVERSARIANTES DO MES###\n");
+                aniversariantesP(mesAtual, qtdprof, Lista_Prof Professor[]);
+                break;
+            }
+            case 6:
+            {
+                printf("\n###ALTERAR DADOS DE PROFESSORES###\n");
+                alterar_professor(Professor);
+                break;
+            }
+            case 7:
             {
                 printf("\n###SAINDO DO CADASTRO DE PROFESSORES###\n");
                 break;
@@ -219,7 +231,9 @@ int menu_opcoesP()
     printf("2.Listar Professores\n");
     printf("3.Listar Professores por Sexo\n");
     printf("4.Remover Professores\n");
-    printf("5.Sair\n");
+    printf("5.Aniversariantes do Mes\n");
+    printf("6.Alterar Cadastro\n");
+    printf("7.Sair\n");
     scanf("%d",&op);
     return op;
 }
@@ -305,8 +319,20 @@ void retirar_Professor(int qtd,Lista_Prof Professores[])
         strcpy(Professores[cont].nome,Professores[cont+1].nome);
         strcpy(Professores[cont].CPF,Professores[cont+1].CPF);
     }
-    
-    listar_Professor(Professores);
-    return ;
 }
     
+void aniversariantesP(int mesAtual, int qtdProf, Lista_Prof Professor[])
+{
+    int x;
+    
+    printf("\n###ANIVERSARIANTES DO MES###\n")
+
+    for(x=0;x<qtdProf;x++)
+    {
+        if(Professor[x].dataNascimento.mes==mesAtual)
+        {
+            printf("%s\n",Professor[x].nome);
+        }
+    }
+    printf("\n");
+}
