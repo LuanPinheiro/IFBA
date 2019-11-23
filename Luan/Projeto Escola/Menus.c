@@ -35,34 +35,45 @@ int validardtnasc(int d, int m, int a);
 int validarcpf(char c[15]);
 int validarsexo(char s);
 int validarmatricula(int mat);
+void aniversariantes(int mesAtual, int qtdAlunos, Lista_aluno Aluno[], int qtdProf, Lista_Prof Professores[]);
 
 //Funções para Alunos
-int matricula_Aluno(int qtd,Lista_aluno Alunos[]);
+int matricula_Aluno(int qtd, Lista_aluno Alunos[]);
 void listar_aluno(Lista_aluno Alunos[]);
 void status_aluno(Lista_aluno Alunos[]);
-void retirar_aluno(Lista_aluno Alunos[]);
-void alterar_aluno(Lista_aluno Alunos[]);
+void retirar_aluno(int qtd, Lista_aluno Alunos[]);
+void alterar_aluno(int qtd, Lista_aluno Alunos[]);
 void listar_aluno_sexo(Lista_aluno Alunos[]);
 
 //Funções para Professores
-/*int matricula_Professor(int qtd,Lista_Prof Professores[]);
+int matricula_Professor(int qtd,Lista_Prof Professores[]);
 void listar_Professor(Lista_Prof Professores[]);
 void listar_Professor_sexo(Lista_Prof Professores[]);
 void status_Professor(Lista_Prof Professores[]);
-void retirar_Professor(Lista_Prof Professores[]);
-void alterar_professor(Lista_Prof Professores[]);*/
+void retirar_Professor(int qtd, Lista_Prof Professores[]);
+void alterar_professor(int qtd, Lista_Prof Professores[]);
 
 int main()
 {
     //valor de options em 1 para iniciar o while
     int options=1, qtdAlunos=0, qtdProf=0, mesAtual, retorno;// qtdDisc=0;
     Lista_aluno Aluno[TAMANHO_LISTA];
-    //Lista_Prof Prof[TAMANHO_LISTA];
+    Lista_Prof Prof[TAMANHO_LISTA];
 
+    //iniciando as matriculas como inativas
     status_aluno(Aluno);
+    status_Professor(Prof);
 
     printf("Digite o Mes atual:\n");
     scanf("%d",&mesAtual);
+    if(mesAtual>12||mesAtual<1)
+    {
+        while(mesAtual>12||mesAtual<1)
+        {
+            printf("\nMES INVALIDO, DIGITE NOVAMENTE\n");
+            scanf("%d",&mesAtual);
+        }
+    }
     printf("\n");
 
     while (options!=0)
@@ -101,43 +112,70 @@ int main()
                     if (retorno==1)
                         qtdAlunos++;
                     break;
-            /*case 2: retorno = matricula_Professor(qtdProf, Prof);
+            case 2: retorno = matricula_Professor(qtdProf, Prof);
                     if (retorno==1)
                         qtdProf++;
-                    break;*/
+                    break;
             case 3: /*cadastroDisciplina(qtdDisc);*/ break;
             case 4: if(qtdAlunos>0)
                     {
-                        retirar_aluno(Aluno);
+                        retirar_aluno(qtdAlunos, Aluno);
                         qtdAlunos--;
                     }
                     else
                         printf("\nNAO POSSUI ALUNOS CADASTRADOS\n");                    
                     break;
-            /*case 5: if(qtdProf>0)
+            case 5: if(qtdProf>0)
                     {
-                        retirar_Professor(Prof);
+                        retirar_Professor(qtdProf, Prof);
                         qtdProf--;
                     }
                     else
                         printf("\nNAO POSSUI PROFESSORES CADASTRADOS\n");                    
-                    break;*/
+                    break;
             case 6: if(qtdAlunos>0)
-                        alterar_aluno(Aluno);
+                        alterar_aluno(qtdAlunos, Aluno);
                     else
                         printf("\nNAO POSSUI ALUNOS CADASTRADOS\n");                    
                     break;
-            /*case 7: if(qtdProf>0)
-                        alterar_professor(Prof);
+            case 7: if(qtdProf>0)
+                        alterar_professor(qtdProf, Prof);
                     else
                         printf("\nNAO POSSUI PROFESSORES CADASTRADOS\n");                    
-                    break;*/
-            case 8:  listar_aluno(Aluno); break;
-            //case 9:  listar_Professor(Prof); break;
-            case 12: listar_aluno_sexo(Aluno); break;
-            //case 15: listar_Professor_sexo(Prof); break;
-            //case 19: aniversariantes(mesAtual, qtdAlunos, Aluno, qtdProf, Prof); break;
-            case 20: printf("Digite o mes atual"); scanf("%d", &mesAtual); break;
+                    break;
+            case 8: if(qtdAlunos>0)
+                        listar_aluno(Aluno);
+                    else
+                        printf("\nNAO POSSUI ALUNOS CADASTRADOS\n");                    
+                    break;
+            case 9: if(qtdProf>0)
+                        listar_Professor(Prof);
+                    else
+                        printf("\nNAO POSSUI PROFESSORES CADASTRADOS\n");                    
+                    break;
+            case 12:if(qtdAlunos>0)
+                        listar_aluno_sexo(Aluno);
+                    else
+                        printf("\nNAO POSSUI ALUNOS CADASTRADOS\n");                    
+                    break;
+            case 15:if(qtdProf>0)
+                        listar_Professor_sexo(Prof);
+                    else
+                        printf("\nNAO POSSUI PROFESSORES CADASTRADOS\n");                    
+                    break;
+            case 19:aniversariantes(mesAtual, qtdAlunos, Aluno, qtdProf, Prof); break;
+            case 20:printf("Digite o mes atual:\n");
+                    scanf("%d", &mesAtual);
+                    if(mesAtual>12||mesAtual<1)
+                    {
+                        while(mesAtual>12||mesAtual<1)
+                        {
+                            printf("\nMES INVALIDO, DIGITE NOVAMENTE\n");
+                            scanf("%d",&mesAtual);
+                        }
+                    }
+                    printf("\n");
+                    break;
             default: while(options>19 || options<0)
             {
                 printf("Numero Invalido\n");
@@ -151,15 +189,6 @@ int main()
 int matricula_Aluno(int qtd, Lista_aluno Alunos[])
 {
     int v1,v2,v3,v4,v5;
-    int ver;
-    
-    for(ver=0;ver<TAMANHO_LISTA;ver++)
-    {
-        if(Alunos[qtd].matricula!=-1)
-            qtd++;
-        else
-            break;
-    }
 
     printf("Informe a matricula do aluno\n");
     scanf("%d",&Alunos[qtd].matricula);
@@ -212,7 +241,70 @@ int matricula_Aluno(int qtd, Lista_aluno Alunos[])
         printf("\nERR0_SEXO_INVALIDO\n");
     if(v5==0)
         printf("\nERRO_MATRICULA_INVALIDA\n");
+
+    Alunos[qtd].matricula=-1;
     return 0;   
+}
+
+int matricula_Professor(int qtd, Lista_Prof Professores[])
+{
+    int v1,v2,v3,v4,v5;
+    
+    printf("Informe a matricula do Professor\n");
+    scanf("%d",&Professores[qtd].matricula);
+    getchar();
+    
+    printf("Informe o nome do Professor\n");
+    fgets(Professores[qtd].nome,40,stdin);
+    size_t ln= strlen(Professores[qtd].nome)-1;
+    if(Professores[qtd].nome[ln]=='\n')
+            Professores[qtd].nome[ln]='\0';
+    
+    printf("Informe o dia de Nascimento\n");
+    scanf("%d",&Professores[qtd].dtnasc.dia);
+    
+    printf("Informe o mes de Nascimento\n");
+    scanf("%d",&Professores[qtd].dtnasc.mes);
+    
+    printf("Informe o ano de Nascimento\n");
+    scanf("%d",&Professores[qtd].dtnasc.ano);
+    getchar();
+        
+    printf("Informe o CPF do Professor\n");
+    fgets(Professores[qtd].CPF,15,stdin);
+    ln= strlen(Professores[qtd].CPF)-1;
+    if(Professores[qtd].CPF[ln]=='\n')
+            Professores[qtd].CPF[ln]='\0';
+        
+    printf("Infome o sexo do Professor(F, M ou O)\n");
+    scanf("%c",&Professores[qtd].sexo);
+    
+    //ValidaÃ§Ã£o dos dados inseridos//
+    v1=validarnome(Professores[qtd].nome);
+    v2=validardtnasc(Professores[qtd].dtnasc.dia,Professores[qtd].dtnasc.mes,Professores[qtd].dtnasc.ano);
+    v3=validarcpf(Professores[qtd].CPF);
+    v4=validarsexo(Professores[qtd].sexo);
+    v5=validarmatricula(Professores[qtd].matricula);
+    
+    if(v1==1 && v2==1 && v3==1 && v4==1 && v5==1)
+    {
+        printf("\nMATRICULA CONCLUIDA\n");
+        return 1;
+    }
+    if(v1==0)
+        printf("\nERRO_NOME_INVALIDO\n");
+    if(v2==0)
+        printf("\nERRO_DATA_INVALIDA\n");
+    if(v3==0)
+        printf("\nERRO_CPF_INVALIDO\n");
+    if(v4==0)
+        printf("\nERR0_SEXO_INVALIDO\n");
+    if(v5==0)
+        printf("\nERRO_MATRICULA_INVALIDA\n");
+
+    Professores[qtd].matricula=-1;
+    return 0;
+    
 }
 
 int validarnome(char nm[])
@@ -297,6 +389,24 @@ void listar_aluno(Lista_aluno Alunos[])
     }
 }
 
+void listar_Professor(Lista_Prof Professores[])
+{
+    int x;
+    
+    for(x=0;x<TAMANHO_LISTA;x++)
+    {
+        if(Professores[x].matricula!=-1)
+        {
+            printf("%d. Nome: %s\n",x+1,Professores[x].nome);
+            printf("Matricula: %d\n",Professores[x].matricula);
+            printf("Data de Nascimento : %d/%d/%d\n",Professores[x].dtnasc.dia,Professores[x].dtnasc.mes,Professores[x].dtnasc.ano);
+            printf("CPF : %s\n",Professores[x].CPF);
+            printf("Sexo : %c\n",Professores[x].sexo);
+            printf("\n");
+        }
+    }
+}
+
 void status_aluno(Lista_aluno Alunos[])
 {
     int x;
@@ -305,13 +415,26 @@ void status_aluno(Lista_aluno Alunos[])
         Alunos[x].matricula = -1;
 }
 
-void retirar_aluno(Lista_aluno Alunos[])
+void status_Professor(Lista_Prof Professores[])
+{
+    int x;
+    
+    for(x=0;x<TAMANHO_LISTA;x++)
+        Professores[x].matricula = -1;
+}
+
+void retirar_aluno(int qtd, Lista_aluno Alunos[])
 {
     int del;
     int cont;
-    printf("Informe o número do Aluno\n");
+    printf("Informe o numero do Aluno\n");
     listar_aluno(Alunos);
     scanf("%d",&del);
+    if(del>qtd||del<1)
+    {
+        printf("\nNUMERO INVALIDO\n");
+        return;
+    }
     del--;
     for(cont=del;Alunos[cont].matricula!=-1;cont++)
     {
@@ -323,9 +446,34 @@ void retirar_aluno(Lista_aluno Alunos[])
         strcpy(Alunos[cont].nome,Alunos[cont+1].nome);
         strcpy(Alunos[cont].CPF,Alunos[cont+1].CPF);
     }
-}   
+}
 
-void alterar_aluno(Lista_aluno Alunos[])
+void retirar_Professor(int qtd, Lista_Prof Professores[])
+{
+    int del;
+    int cont;
+    printf("Informe o numero do Professor\n");
+    listar_Professor(Professores);
+    scanf("%d",&del);
+    if(del>qtd||del<1)
+    {
+        printf("\nNUMERO INVALIDO\n");
+        return;
+    }
+    del--;
+    for(cont=del;Professores[cont].matricula!=-1;cont++)
+    {
+        Professores[cont].matricula=Professores[cont+1].matricula;
+        Professores[cont].sexo=Professores[cont+1].sexo;
+        Professores[cont].dtnasc.dia=Professores[cont+1].dtnasc.dia;
+        Professores[cont].dtnasc.mes=Professores[cont+1].dtnasc.mes;
+        Professores[cont].dtnasc.ano=Professores[cont+1].dtnasc.ano;
+        strcpy(Professores[cont].nome,Professores[cont+1].nome);
+        strcpy(Professores[cont].CPF,Professores[cont+1].CPF);
+    }
+}
+
+void alterar_aluno(int qtd, Lista_aluno Alunos[])
 {
     int alt;
     int op;
@@ -337,6 +485,14 @@ void alterar_aluno(Lista_aluno Alunos[])
     printf("Informe o Aluno que quer alterar\n");
     listar_aluno(Alunos);
     scanf("%d",&alt);
+    if(alt>qtd||alt<1)
+    {
+        while(alt>qtd||alt<1)
+        {
+            printf("NUMERO INVALIDO\n");
+            scanf("%d",&alt);
+        }
+    }
     alt--;
     printf("Informe que dado alterar\n");
     printf("1.Matricula\n");
@@ -448,8 +604,139 @@ void alterar_aluno(Lista_aluno Alunos[])
             }
         }
     }
-       
-    return;
+}
+
+void alterar_professor(int qtd, Lista_Prof Professores[])
+{
+    int alt;
+    int op;
+    int ver;
+    int altnum,altdia,altmes,altano;
+    char altname[50];
+    char altchar;
+    
+    printf("Informe o Professor que quer alterar:\n");
+    listar_aluno(Professores);
+    scanf("%d",&alt);
+    if(alt>qtd||alt<1)
+    {
+        while(alt>qtd||alt<1)
+        {
+            printf("NUMERO INVALIDO\n");
+            scanf("%d",&alt);
+        }
+    }
+    alt--;
+    printf("Informe que dado alterar:\n");
+    printf("1.Matricula\n");
+    printf("2.Nome\n");
+    printf("3.Data de Nascimento\n");
+    printf("4.CPF\n");
+    printf("5.Sexo\n");
+    scanf("%d",&op);
+    getchar();
+    
+    switch(op)
+    {
+        case 1:
+        {
+            printf("Informe a nova matricula\n");
+            scanf("%d",&altnum);
+            ver=validarmatricula(altnum);
+            if(ver==1)
+            {
+                Professores[alt].matricula=altnum;
+                printf("\n###ALTERAÇÃO REALIZADA COM SUCESSO###\n");
+                break;
+            }
+            else
+            {
+                printf("\n###ERRO_MATRICULA_INVALIDA###\n");
+                break;
+            }
+        }
+        case 2:
+        {
+            printf("Informe o novo nome\n");
+            fgets(altname,50,stdin);
+            size_t ln= strlen(altname)-1;
+            if(altname[ln]=='\n')
+                altname[ln]='\0';    
+            ver=validarnome(altname);
+            if(ver==1)
+            {
+                strcpy(Professores[alt].nome,altname);
+                printf("\n###ALTERAÇÃO REALIZADA COM SUCESSO###\n");
+                break;
+            }
+            else
+            {
+                printf("\n###ERRO_NOME_INVALIDO###\n");
+                break;
+            }
+        }
+        case 3:
+        {
+            printf("Informe a nova Data de Nascimento\n");
+            printf("Dia:\n");
+            scanf("%d",&altdia);
+            printf("Mes:\n");
+            scanf("%d",&altmes);    
+            printf("Ano:\n");
+            scanf("%d",&altano);
+            ver=validardtnasc(altdia,altmes,altano);
+            if(ver==1)
+            {
+                Professores[alt].dtnasc.dia=altdia;
+                Professores[alt].dtnasc.mes=altmes;
+                Professores[alt].dtnasc.ano=altano;
+                printf("\n###ALTERAÇÃO REALIZADA COM SUCESSO###\n");
+                break;
+            }
+            else
+            {
+                printf("\n###ERRO_DATA_INVALIDA###\n");
+                break;
+            }
+        }
+        case 4:
+        {
+            printf("Informe o novo CPF\n");
+            fgets(altname,50,stdin);
+            size_t ln= strlen(altname)-1;
+            if(altname[ln]=='\n')
+                altname[ln]='\0';    
+            ver=validarcpf(altname);
+            if(ver==1)
+            {
+                strcpy(Professores[alt].CPF,altname);
+                printf("\n###ALTERAÇÃO REALIZADA COM SUCESSO###\n");
+                break;
+            }
+            else
+            {
+                printf("\n###ERRO_CPF_INVALIDO###\n");
+                break;
+            }
+        } 
+        case 5:
+        {
+            printf("Informe o novo sexo\n");
+            scanf("%c",&altchar);
+            ver=validarsexo(altchar);
+            if(ver==1)
+            {
+                Professores[alt].sexo=altchar;
+                printf("\n###ALTERAÇÃO REALIZADA COM SUCESSO###\n");
+                break;
+            }
+            else
+            {
+                printf("\n###ERRO_SEXO_INVALIDA###\n");
+                break;
+            }
+        }
+    }
 }
 
 void listar_aluno_sexo(Lista_aluno Alunos[])
@@ -461,7 +748,7 @@ void listar_aluno_sexo(Lista_aluno Alunos[])
     {
         if(Alunos[x].sexo=='f' || Alunos[x].sexo=='F') 
         {
-            printf("%d. Nome: %s\n",aux,Alunos[x].nome);
+            printf("%d.%s\n",aux,Alunos[x].nome);
             printf("\n");
             aux++;
         }
@@ -472,9 +759,83 @@ void listar_aluno_sexo(Lista_aluno Alunos[])
     {
         if(Alunos[x].sexo=='m' || Alunos[x].sexo=='M') 
         {
-            printf("%d. Nome: %s\n",aux+1,Alunos[x].nome);
+            printf("%d.%s\n",aux,Alunos[x].nome);
+            printf("\n");
+            aux++;
+        }
+    }
+
+    printf("\nSexo Outro:\n");
+
+    for(x=0,aux=1;x<TAMANHO_LISTA;x++)
+    {
+        if(Alunos[x].sexo=='o' || Alunos[x].sexo=='O') 
+        {
+            printf("%d.%s\n",aux,Alunos[x].nome);
             printf("\n");
             aux++;
         }
     }
 }
+
+void listar_Professor_sexo(Lista_Prof Professores[])
+{
+    int x, aux;
+    
+    printf("\nSexo Feminino:\n");
+    for(x=0,aux=1;x<TAMANHO_LISTA;x++)
+    {
+        if(Professores[x].sexo=='f' || Professores[x].sexo=='F') 
+        {
+            printf("%d.%s\n",aux,Professores[x].nome);
+            printf("\n");
+            aux++;
+        }
+    }
+    printf("\nSexo Masculino:\n");
+
+    for(x=0,aux=1;x<TAMANHO_LISTA;x++)
+    {
+        if(Professores[x].sexo=='m' || Professores[x].sexo=='M') 
+        {
+            printf("%d.%s\n",aux,Professores[x].nome);
+            printf("\n");
+            aux++;
+        }
+    }
+
+    printf("\nSexo Outro:\n");
+
+    for(x=0,aux=1;x<TAMANHO_LISTA;x++)
+    {
+        if(Professores[x].sexo=='o' || Professores[x].sexo=='O') 
+        {
+            printf("%d.%s\n",aux,Professores[x].nome);
+            printf("\n");
+            aux++;
+        }
+    }
+}
+
+void aniversariantes(int mesAtual, int qtdAlunos, Lista_aluno Aluno[], int qtdProf, Lista_Prof Professores[])
+{
+    int x;
+
+    printf("\n###ANIVERSARIANTES DO MES###\n");
+
+    for(x=0;x<qtdAlunos;x++)
+    {
+        if(Aluno[x].dtnasc.mes==mesAtual)
+        {
+            printf("%s\n",Aluno[x].nome);
+        }
+    }
+    for(x=0;x<qtdProf;x++)
+    {
+        if(Professores[x].dtnasc.mes==mesAtual)
+        {
+            printf("%s\n",Professores[x].nome);
+        }
+    }
+    printf("\n");
+} 
