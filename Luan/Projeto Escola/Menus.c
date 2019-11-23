@@ -35,7 +35,7 @@ int validardtnasc(int d, int m, int a);
 int validarcpf(char c[15]);
 int validarsexo(char s);
 int validarmatricula(int mat);
-void aniversariantes(int mesAtual, int qtdAlunos, Lista_aluno Aluno[], int qtdProf, Lista_Prof Professores[]);
+void aniversariantes(int mesAtual, int qtdAlunos, Lista_aluno Alunos[], int qtdProf, Lista_Prof Professores[]);
 
 //Funções para Alunos
 int matricula_Aluno(int qtd, Lista_aluno Alunos[]);
@@ -44,6 +44,7 @@ void status_aluno(Lista_aluno Alunos[]);
 void retirar_aluno(int qtd, Lista_aluno Alunos[]);
 void alterar_aluno(int qtd, Lista_aluno Alunos[]);
 void listar_aluno_sexo(Lista_aluno Alunos[]);
+//void listar_aluno_data(int qtd, Lista_aluno Alunos[]);
 
 //Funções para Professores
 int matricula_Professor(int qtd,Lista_Prof Professores[]);
@@ -158,6 +159,11 @@ int main()
                     else
                         printf("\nNAO POSSUI ALUNOS CADASTRADOS\n");                    
                     break;
+            /*case 14:if(qtdAlunos>0)
+                        listar_aluno_data(qtdAlunos, Aluno);
+                    else
+                        printf("\nNAO POSSUI ALUNOS CADASTRADOS\n");                    
+                    break;*/
             case 15:if(qtdProf>0)
                         listar_Professor_sexo(Prof);
                     else
@@ -616,7 +622,7 @@ void alterar_professor(int qtd, Lista_Prof Professores[])
     char altchar;
     
     printf("Informe o Professor que quer alterar:\n");
-    listar_aluno(Professores);
+    listar_Professor(Professores);
     scanf("%d",&alt);
     if(alt>qtd||alt<1)
     {
@@ -817,7 +823,7 @@ void listar_Professor_sexo(Lista_Prof Professores[])
     }
 }
 
-void aniversariantes(int mesAtual, int qtdAlunos, Lista_aluno Aluno[], int qtdProf, Lista_Prof Professores[])
+void aniversariantes(int mesAtual, int qtdAlunos, Lista_aluno Alunos[], int qtdProf, Lista_Prof Professores[])
 {
     int x;
 
@@ -825,9 +831,9 @@ void aniversariantes(int mesAtual, int qtdAlunos, Lista_aluno Aluno[], int qtdPr
 
     for(x=0;x<qtdAlunos;x++)
     {
-        if(Aluno[x].dtnasc.mes==mesAtual)
+        if(Alunos[x].dtnasc.mes==mesAtual)
         {
-            printf("%s\n",Aluno[x].nome);
+            printf("%s\n",Alunos[x].nome);
         }
     }
     for(x=0;x<qtdProf;x++)
@@ -838,4 +844,93 @@ void aniversariantes(int mesAtual, int qtdAlunos, Lista_aluno Aluno[], int qtdPr
         }
     }
     printf("\n");
-} 
+}
+
+/*void listar_aluno_data(int qtd, Lista_aluno Alunos[])
+{
+    int x, y, j, menor;
+    Lista_aluno ordem[TAMANHO_LISTA], aux;
+    //fazendo uma copia dos alunos
+    for(x=0;x<qtd;x++)
+    {
+        ordem[x].dtnasc.ano=Alunos[x].dtnasc.ano;
+        ordem[x].dtnasc.mes=Alunos[x].dtnasc.mes;
+        ordem[x].dtnasc.dia=Alunos[x].dtnasc.dia;
+        strcpy(ordem[x].nome,Alunos[x].nome);
+    }
+    //ordenando anos
+    for(x=0;x<qtd;x++)
+    {
+        menor=ordem[x].dtnasc.ano;
+        for(y=x;x<qtd;x++)
+            if(ordem[y].dtnasc.ano<menor)
+                menor=y;
+        
+        aux.dtnasc.ano=ordem[y].dtnasc.ano;
+        aux.dtnasc.mes=ordem[y].dtnasc.mes;
+        aux.dtnasc.dia=ordem[y].dtnasc.dia;
+        strcpy(aux.nome,ordem[y].nome);
+
+        ordem[y].dtnasc.ano=ordem[x].dtnasc.ano;
+        ordem[y].dtnasc.mes=ordem[x].dtnasc.mes;
+        ordem[y].dtnasc.dia=ordem[x].dtnasc.dia;
+        strcpy(ordem[y].nome,ordem[x].nome);
+
+        ordem[x].dtnasc.ano=aux.dtnasc.ano;
+        ordem[x].dtnasc.mes=aux.dtnasc.mes;
+        ordem[x].dtnasc.dia=aux.dtnasc.dia;
+        strcpy(ordem[x].nome,aux.nome);
+    }
+    //ordenando os meses
+    for(x=0;x<qtd;x++)
+    {
+        menor=ordem[x].dtnasc.mes;
+        for(y=x;x<qtd;x++)
+            if(ordem[y].dtnasc.ano==ordem[x].dtnasc.ano)
+                if(ordem[y].dtnasc.mes<menor)
+                    menor=ordem[y].dtnasc.mes;
+        
+        aux.dtnasc.ano=ordem[y].dtnasc.ano;
+        aux.dtnasc.mes=ordem[y].dtnasc.mes;
+        aux.dtnasc.dia=ordem[y].dtnasc.dia;
+        strcpy(aux.nome,ordem[y].nome);
+            
+        ordem[y].dtnasc.ano=ordem[x].dtnasc.ano;
+        ordem[y].dtnasc.mes=ordem[x].dtnasc.mes;
+        ordem[y].dtnasc.dia=ordem[x].dtnasc.dia;
+        strcpy(ordem[y].nome,ordem[x].nome);
+
+        ordem[x].dtnasc.ano=aux.dtnasc.ano;
+        ordem[x].dtnasc.mes=aux.dtnasc.mes;
+        ordem[x].dtnasc.dia=aux.dtnasc.dia;
+        strcpy(ordem[x].nome,aux.nome);
+    }
+    //ordenando os dias
+    for(x=0;x<qtd;x++)
+    {
+        menor=ordem[x].dtnasc.dia;
+        for(y=x;x<qtd;x++)
+            if(ordem[y].dtnasc.ano==ordem[x].dtnasc.ano)
+                if(ordem[y].dtnasc.mes==ordem[x].dtnasc.mes)
+                    if(ordem[y].dtnasc.dia<menor)
+                        menor=ordem[y].dtnasc.dia;
+
+            aux.dtnasc.ano=ordem[y].dtnasc.ano;
+            aux.dtnasc.mes=ordem[y].dtnasc.mes;
+            aux.dtnasc.dia=ordem[y].dtnasc.dia;
+            strcpy(aux.nome,ordem[y].nome);
+            
+            ordem[y].dtnasc.ano=ordem[x].dtnasc.ano;
+            ordem[y].dtnasc.mes=ordem[x].dtnasc.mes;
+            ordem[y].dtnasc.dia=ordem[x].dtnasc.dia;
+            strcpy(ordem[y].nome,ordem[x].nome);
+
+            ordem[x].dtnasc.ano=aux.dtnasc.ano;
+            ordem[x].dtnasc.mes=aux.dtnasc.mes;
+            ordem[x].dtnasc.dia=aux.dtnasc.dia;
+            strcpy(ordem[x].nome,aux.nome);
+    }
+    //Lista Final
+    for(x=0,j=1;x<qtd;x++,j++)
+        printf("%d.%s\n",j,ordem[x].nome);
+}*/
