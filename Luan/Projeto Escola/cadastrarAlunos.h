@@ -32,6 +32,7 @@ int menu_opcoesalunos();
 void listar_aluno(Lista_aluno Alunos[]);
 void listar_aluno_nome(int qtd,Lista_aluno Alunos[]);
 void listar_aluno_sexo(int qtd,Lista_aluno Alunos[]);
+void listar_aluno_data(int qtd, Lista_aluno Alunos[]);
 void status_aluno(Lista_aluno Alunos[]);
 void retirar_aluno(int qtd,Lista_aluno Alunos[]);
 void alterar_aluno(int qtd,Lista_aluno Alunos[]);
@@ -187,7 +188,8 @@ int menu_opcoesalunos()
     printf("4.Alterar dados de Alunos\n");
     printf("5.Listar Alunos por Nome\n");
     printf("6.Listar Alunos por Sexo\n");
-    printf("7.Sair\n");
+    printf("7.Listar Alunos por Data de Nascimento\n");
+    printf("8.Sair\n");
     scanf("%d",&op);
     return op;
 }
@@ -385,7 +387,7 @@ int menu_alunos(int qtdaluno,Lista_aluno Aluno[])
 
     
     
-    while(opcao!=7)
+    while(opcao!=8)
     {
         opcao=menu_opcoesalunos();
         switch(opcao)
@@ -453,6 +455,12 @@ int menu_alunos(int qtdaluno,Lista_aluno Aluno[])
             }
             case 7:
             {
+                printf("###LISTA DE ALUNOS POR DATA DE NASCIMENTO###\n");
+                listar_aluno_data(qtdaluno,Aluno);
+                break;
+            }
+            case 8:
+            {
                 printf("\n###SAINDO DO MENU DE ALUNOS###\n");
                 break;
             }
@@ -515,4 +523,40 @@ void listar_aluno_sexo(int qtd, Lista_aluno Alunos[])
             aux++;
         }
     }
+}
+
+void listar_aluno_data(int qtd,Lista_aluno Alunos[]){
+
+    int iCont, jCont;
+    Lista_aluno aux;
+
+    for(iCont = 1; iCont<qtd; iCont++){
+
+        aux= Alunos[iCont];
+        
+        for(jCont= iCont; (jCont>0) && (aux.dtnasc.ano< Alunos[jCont - 1].dtnasc.ano); jCont--)
+            Alunos[jCont]=Alunos[jCont-1];
+
+        Alunos[jCont] = aux;
+    }
+    for(iCont = 1; iCont<qtd; iCont++){
+
+        aux= Alunos[iCont];
+        
+        for(jCont= iCont; (jCont>0) && (aux.dtnasc.mes< Alunos[jCont - 1].dtnasc.mes) && (aux.dtnasc.ano==Alunos[jCont - 1].dtnasc.ano); jCont--)
+            Alunos[jCont]=Alunos[jCont-1];
+
+        Alunos[jCont] = aux;
+    }
+    for(iCont = 1; iCont<qtd; iCont++){
+
+        aux= Alunos[iCont];
+        
+        for(jCont= iCont; (jCont>0) && (aux.dtnasc.dia< Alunos[jCont - 1].dtnasc.dia) && (aux.dtnasc.ano==Alunos[jCont - 1].dtnasc.ano) && (aux.dtnasc.mes==Alunos[jCont - 1].dtnasc.mes); jCont--)
+            Alunos[jCont]=Alunos[jCont-1];
+
+        Alunos[jCont] = aux;
+    }
+    for(iCont=0,jCont=1;iCont<qtd;iCont++,jCont++)
+        printf("\n%d.%s\n%d/%d/%d\n",jCont,Alunos[iCont].nome,Alunos[iCont].dtnasc.dia,Alunos[iCont].dtnasc.mes,Alunos[iCont].dtnasc.ano);
 }
