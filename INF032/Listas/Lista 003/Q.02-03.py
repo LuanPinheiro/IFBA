@@ -9,3 +9,8 @@ Listona[1].append(Listona[1][0]) #Adicionando Brigadeiro na lista Docinhos
 
 Listona.append("Bebidas") #Acrescentado Bebidas no final da lista
 print(Listona)
+
+#Questão 3
+print("QUESTÃO 3:")
+del Listona[:]
+print(Listona)
