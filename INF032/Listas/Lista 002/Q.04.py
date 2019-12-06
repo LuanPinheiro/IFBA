@@ -1,0 +1,7 @@
+HoraAula = float(input("Digite o Valor Hora/Aula: "))
+QuantidadeAulas = int(input("Digite a Quantidade de Aulas: "))
+PercentualINSS = float(input("Digite o Percentual de Desconto do INSS: "))
+Salario = (QuantidadeAulas*HoraAula)
+SalarioLiquido = Salario - (Salario*(PercentualINSS/100))
+print("Salário Líquido:")
+print(SalarioLiquido)

@@ -22,9 +22,12 @@
 // #################################################
 
 #include <stdio.h>
+#include "LuanPinheiro-2019116025-T1.h"
+#include <string.h>
 
 int main(){
-    int options=1;
+    int options=1, retorno;
+    char data[10];
 
     while(options!=0)
     {
@@ -37,15 +40,26 @@ int main(){
         printf("6.Questão 6\n");
 
         scanf("%d",&options);
+        getchar();
         switch(options)
         {
             case 0: return 0; break;
-            case 1: q1(); break;
-            case 2: q2(); break;
-            case 3: q3(); break;
-            case 4: q4(); break;
-            case 5: q5(); break;
-            case 6: q6(); break;
+            case 1: printf("Digite uma data: ");
+                    fgets(data,10,stdin);
+                    size_t ln= strlen(data)-1;
+                    if(data[ln]=='\n')
+                        data[ln]='\0';
+                    retorno = q1(data,ln);
+                    if(retorno==0)
+                        printf("Data Invalida\n");
+                    else
+                        printf("Data Valida\n");
+                    break;
+            //case 2: q2(); break;
+            //case 3: q3(); break;
+            //case 4: q4(); break;
+            //case 5: q5(); break;
+            //case 6: q6(); break;
         }
     }
 }
@@ -90,16 +104,16 @@ int fatorial(int x){ //função utilizada para testes
     0 -> se data inválida
     1 -> se data válida
  */
-int q1(char *data){
+int q1(char data[]){
     int datavalida = 1;
-
+    if(strlen(data)>10)
+        datavalida = 0;
+    
     //printf("%s\n", data);
 
 
-    if (datavalida)
-        return 1;
-    else
-        return 0;
+    
+    return datavalida;
 
 }
 
