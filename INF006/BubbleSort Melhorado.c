@@ -29,10 +29,11 @@ void bubbleSort(int vet[], int tam)
         }
     }
 //Imprime vetor ordenado
+printf(" Vetor ordenado\n");
 
     for(i=0;i<tam;i++)
     {
-        printf("%d",vet[i]);
+        printf(" %d |",vet[i]);
     }
     printf("\n");
 }
@@ -43,13 +44,14 @@ int main()
 {
     int x,tam;
     
+    printf("Defina o tamanho do seu vetor\n");
     scanf("%d" , &tam);// ler o maximo de algarismo do vetor
     
     printf(" Insira os valores\n");
     
      int vet[tam];
      
-    for(x=0;x<tam;x++)
+        for(x=0;x<tam;x++)
         scanf("%d" , &vet[x]);
             
     bubbleSort(vet,tam);
