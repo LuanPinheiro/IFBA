@@ -22,8 +22,9 @@
 // #################################################
 
 #include <stdio.h>
-#include "LuanPinheiro-2019116025-T1.h"
+#include <stdlib.h>
 #include <string.h>
+#include "LuanPinheiro-2019116025-T1.h"
 
 int main(){
     int options=1, retorno;
@@ -44,12 +45,8 @@ int main(){
         switch(options)
         {
             case 0: return 0; break;
-            case 1: printf("Digite uma data: ");
-                    fgets(data,10,stdin);
-                    size_t ln= strlen(data)-1;
-                    if(data[ln]=='\n')
-                        data[ln]='\0';
-                    retorno = q1(data,ln);
+            case 1: strcpy(data,"1/1/200");
+                    retorno = q1(data);
                     if(retorno==0)
                         printf("Data Invalida\n");
                     else
@@ -105,16 +102,93 @@ int fatorial(int x){ //função utilizada para testes
     1 -> se data válida
  */
 int q1(char data[]){
-    int datavalida = 1;
+
+    int i, j, intDia, intMes, intAno;
+    char strDia[3], strMes[3], strAno[3];
+
     if(strlen(data)>10)
-        datavalida = 0;
+        return 0;
+    else
+    {
+        for(i=0;data[i]!='/';i++)
+        {
+            strDia[i]=data[i];
+            if(i>1)
+                return 0;
+            else if(strDia[i]>57 && strDia[i]<48)
+                return 0;
+        }
+
+        strDia[i]='\0';
+        if(strlen(strDia) == 0)
+            return 0;
+        intDia = atoi(strDia);
+        i++;
+
+        for(j=0;data[i]!='/';i++,j++)
+        {
+            strMes[j]=data[i];
+            if(j>1)
+                return 0;
+            else if(strMes[j]>57 && strDia[j]<48)
+                return 0;
+        }
+
+        strMes[j] = '\0';
+        if(strlen(strMes) == 0) 
+            return 0;
+        intMes = atoi(strMes); 
+        i++;
+
+        for(j=0;data[i]!='\0';i++,j++)
+        {
+            strAno[j]=data[i];
+            if(j>3)
+                return 0;
+            else if(strAno[j]>57 && strAno[j]<48)
+                return 0;
+        }
+
+        if(strlen(strAno) == 0 || j==1 || j==3) 
+            return 0;
+        intAno = atoi(strAno);
+
+        return validaData(intDia,intMes,intAno); 
+    }
+
+
+    
     
     //printf("%s\n", data);
+}
 
-
+int validaData(int Dia, int Mes, int Ano)
+{
+    int Bissexto = 0;
+    if ((Ano % 4 == 0) || (Ano % 400 == 0))
+       Bissexto = 1;
     
-    return datavalida;
-
+    if(Bissexto=1)
+    {
+        if (Mes==1 || Mes==3 || Mes==5 || Mes==7 || Mes==8 || Mes==10 || Mes==12)
+            if( Dia > 0 && Dia < 32)
+               return 1;
+        else if (Mes==2)
+            if (Dia > 0 && Dia <30)
+               return 1;
+        else if (Mes==4 || Mes==6 || Mes==9 || Mes==11)
+            if (Dia >0 && Dia < 31)
+               return 1;
+    }
+    else
+    {
+        if ((Mes>0 && Mes<2) || (Mes>2 && Mes<13))
+            if (Dia>0 && Dia<31)
+                return 1;
+        else if (Mes==2)
+            if (Dia>0 && Dia<29)
+                return 1;
+    }
 }
 
 /*
