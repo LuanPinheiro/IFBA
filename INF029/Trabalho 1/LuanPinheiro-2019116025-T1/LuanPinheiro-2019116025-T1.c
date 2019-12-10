@@ -27,32 +27,42 @@
 #include "LuanPinheiro-2019116025-T1.h"
 
 int main(){
-    int options=1, retorno;
-    char data[10];
+    int options=1, retorno, qtdDias=-1, qtdMeses=-1, qtdAnos=-1;
+    char data[10], dataInicial[10], dataFinal[10];
 
     while(options!=0)
     {
         printf("0.Fechar o Programa\n");
-        printf("1.Questão 1\n");
-        printf("2.Questão 2\n");
-        printf("3.Questão 3\n");
-        printf("4.Questão 4\n");
-        printf("5.Questão 5\n");
-        printf("6.Questão 6\n");
+        printf("1.Questao 1\n");
+        printf("2.Questao 2\n");
+        printf("3.Questao 3\n");
+        printf("4.Questao 4\n");
+        printf("5.Questao 5\n");
+        printf("6.Questao 6\n");
 
         scanf("%d",&options);
         getchar();
         switch(options)
         {
             case 0: return 0; break;
-            case 1: strcpy(data,"1/1/200");
+            case 1: strcpy(data,"29/2/2000");
                     retorno = q1(data);
                     if(retorno==0)
                         printf("Data Invalida\n");
                     else
                         printf("Data Valida\n");
                     break;
-            //case 2: q2(); break;
+            case 2: strcpy(dataInicial,"05/02/2000");
+                    strcpy(dataFinal,"29/02/2000");
+                    retorno = q2(dataInicial, dataFinal, qtdDias, qtdMeses, qtdAnos);
+                    switch(retorno)
+                    {
+                        case 1: printf("Calculo de Diferenca Realizado Com Sucesso\n"); break;
+                        case 2: printf("Data Inicial Invalida\n"); break;
+                        case 3: printf("Data Final Invalida\n"); break;
+                        case 4: break;
+                    }
+                    break;
             //case 3: q3(); break;
             //case 4: q4(); break;
             //case 5: q5(); break;
@@ -149,46 +159,59 @@ int q1(char data[]){
                 return 0;
         }
 
+        strAno[j] = '\0';
         if(strlen(strAno) == 0 || j==1 || j==3) 
             return 0;
         intAno = atoi(strAno);
 
         return validaData(intDia,intMes,intAno); 
     }
-
-
-    
-    
     //printf("%s\n", data);
 }
 
 int validaData(int Dia, int Mes, int Ano)
 {
     int Bissexto = 0;
-    if ((Ano % 4 == 0) || (Ano % 400 == 0))
+    if(( Ano%4==0 && Ano%100!=0) || Ano%400==0)
        Bissexto = 1;
     
-    if(Bissexto=1)
+    if(Bissexto==1)
     {
         if (Mes==1 || Mes==3 || Mes==5 || Mes==7 || Mes==8 || Mes==10 || Mes==12)
+        {
             if( Dia > 0 && Dia < 32)
                return 1;
-        else if (Mes==2)
-            if (Dia > 0 && Dia <30)
-               return 1;
-        else if (Mes==4 || Mes==6 || Mes==9 || Mes==11)
-            if (Dia >0 && Dia < 31)
-               return 1;
+        }
+        else 
+        {
+            if (Mes==2)
+            {
+                if (Dia > 0 && Dia <30)
+                    return 1;
+            }
+            else
+            {
+                if (Mes==4 || Mes==6 || Mes==9 || Mes==11)
+                    if (Dia >0 && Dia < 31)
+                        return 1;
+            }
+        }
     }
     else
     {
         if ((Mes>0 && Mes<2) || (Mes>2 && Mes<13))
+        {
             if (Dia>0 && Dia<31)
                 return 1;
-        else if (Mes==2)
-            if (Dia>0 && Dia<29)
-                return 1;
+        }
+        else
+        {
+            if (Mes==2)
+                if (Dia>0 && Dia<29)
+                    return 1;
+        }
     }
+    return 0;
 }
 
 /*
@@ -203,32 +226,109 @@ int validaData(int Dia, int Mes, int Ano)
     3 -> datafinal inválida
     4 -> datainicial > datafinal
  */
-int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtdAnos){
+int q2(char datainicial[], char datafinal[], int *qtdDias, int *qtdMeses, int *qtdAnos){
     
     //calcule os dados e armazene nas três variáveis a seguir
-    int nDias, nMeses, nAnos;
+    int nDias, nMeses, nAnos, SomaData;
+    inteirodata retornoInicial, retornoFinal;
 
-
-    if (q1(datainicial) == 0)
+    retornoInicial = quantidadeData(datainicial);
+    retornoFinal = quantidadeData(datafinal);
+    if (retornoInicial.intDia == 0 || retornoInicial.intMes == 0 || retornoInicial.intAno == 0)
         return 2;
+    else if (retornoFinal.intDia == 0 || retornoFinal.intMes == 0 || retornoFinal.intAno == 0)
+        return 3;
+    
+    nAnos = retornoInicial.intAno - retornoFinal.intAno;
+    
+    
 
-    nDias = 4;
-    nMeses = 10;
-    nAnos = 2;
-
-
-
-
+    printf("Diferenca de %d Anos, %d Meses e %d Dias",nAnos, nMeses, nDias);
     /*mantenha o código abaixo, para salvar os dados em 
     nos parâmetros da funcao
-    */
     *qtdDias = nDias;
     *qtdAnos = nAnos;
-    *qtdMeses = nMeses;
+    *qtdMeses = nMeses;*/
 
     //coloque o retorno correto
     return 1;
 
+}
+
+inteirodata quantidadeData(char data[])
+{
+    inteirodata retorno;
+    int i, j;
+    char strDia[3], strMes[3], strAno[3];
+    for(i=0;data[i]!='/';i++)
+    {
+        strDia[i]=data[i];
+        if(i>1)
+        {
+            strcpy(strDia,"0");
+            break;
+        }
+        else if(strDia[i]>57 && strDia[i]<48)
+        {
+            strcpy(strDia,"0");
+            break;
+        }
+    }
+
+    strDia[i]='\0';
+    retorno.intDia = atoi(strDia);
+    if(strlen(strDia) == 0)
+        return retorno;
+    i++;
+
+    for(j=0;data[i]!='/';i++,j++)
+    {
+        strMes[j]=data[i];
+        if(j>1)
+        {
+            strcpy(strMes,"0");
+            break;
+        }
+        else if(strMes[j]>57 && strMes[j]<48)
+        {
+            strcpy(strMes,"0");
+            break;
+        }
+    }
+
+    strMes[j] = '\0';
+    retorno.intMes = atoi(strMes);
+    if(strlen(strMes) == 0) 
+        return retorno;
+    i++;
+
+    for(j=0;data[i]!='\0';i++,j++)
+    {
+        strAno[j]=data[i];
+        if(j>3)
+        {
+            strcpy(strDia,"0");
+            break;
+        }
+        else if(strAno[j]>57 && strAno[j]<48)
+        {
+            strcpy(strDia,"0");
+            break;
+        }
+    }
+
+    strAno[j]='\0';
+    retorno.intAno = atoi(strAno);
+    printf("%d  ",retorno.intDia);
+    printf("%d  ",retorno.intMes);
+    printf("%d  ",retorno.intAno);
+    if(strlen(strAno) == 0 || j==1 || j==3) 
+       return retorno;
+    
+    if(validaData(retorno.intDia, retorno.intMes, retorno.intAno)==0)
+        retorno.intDia=0;
+
+    return retorno;
 }
 
 
