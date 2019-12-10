@@ -45,15 +45,19 @@ int main(){
         switch(options)
         {
             case 0: return 0; break;
-            case 1: strcpy(data,"29/02/2000");
+            case 1: printf("Digite uma data: ");
+                    fgets(data,11,stdin);
                     retorno = q1(data);
                     if(retorno==0)
                         printf("Data Invalida\n");
                     else
                         printf("Data Valida\n");
                     break;
-            case 2: strcpy(dataInicial,"10/5/2000");
-                    strcpy(dataFinal,"5/3/2015");
+            case 2: printf("Digite a data inicial: ");
+                    fgets(dataInicial,11,stdin);
+                    getchar();
+                    printf("Digite a data final: ");
+                    fgets(dataFinal,11,stdin);
                     retorno = q2(dataInicial, dataFinal, &qtdDias, &qtdMeses, &qtdAnos);
                     switch(retorno)
                     {
@@ -112,60 +116,12 @@ int fatorial(int x){ //função utilizada para testes
     1 -> se data válida
  */
 int q1(char data[]){
+    
+    inteirodata retorno;
+    
+    retorno = quantidadeData(data);
 
-    int i, j, intDia, intMes, intAno;
-    char strDia[3], strMes[3], strAno[5];
-
-    if(strlen(data)>10)
-        return 0;
-    else
-    {
-        for(i=0;data[i]!='/';i++)
-        {
-            strDia[i]=data[i];
-            if(i>1)
-                return 0;
-            else if(strDia[i]>57 && strDia[i]<48)
-                return 0;
-        }
-
-        strDia[i]='\0';
-        if(strlen(strDia) == 0)
-            return 0;
-        intDia = atoi(strDia);
-        i++;
-
-        for(j=0;data[i]!='/';i++,j++)
-        {
-            strMes[j]=data[i];
-            if(j>1)
-                return 0;
-            else if(strMes[j]>57 && strDia[j]<48)
-                return 0;
-        }
-
-        strMes[j] = '\0';
-        if(strlen(strMes) == 0) 
-            return 0;
-        intMes = atoi(strMes); 
-        i++;
-
-        for(j=0;data[i]!='\0';i++,j++)
-        {
-            strAno[j]=data[i];
-            if(j>3)
-                return 0;
-            else if(strAno[j]>57 && strAno[j]<48)
-                return 0;
-        }
-
-        strAno[j] = '\0';
-        if(strlen(strAno) == 0 || j==1 || j==3) 
-            return 0;
-        intAno = atoi(strAno);
-
-        return validaData(intDia,intMes,intAno); 
-    }
+    return validaData(retorno.intDia,retorno.intMes,retorno.intAno); 
     //printf("%s\n", data);
 }
 
@@ -243,14 +199,20 @@ int q2(char datainicial[], char datafinal[], int *qtdDias, int *qtdMeses, int *q
     if(retornoInicial.intMes>retornoFinal.intMes)
         nAnos-=1;
     
-    nMeses = (12-retornoInicial.intMes) + retornoFinal.intMes;
+    
+    if(retornoInicial.intMes>retornoFinal.intMes)
+        nMeses = (12-retornoInicial.intMes) + retornoFinal.intMes;
+    else
+        nMeses = retornoFinal.intMes - retornoInicial.intMes;
+    
     if(retornoInicial.intDia>retornoFinal.intDia)
-        nMeses-=1;
+        nMeses--;
     if(retornoInicial.intMes!=retornoFinal.intMes)
     {
         retornoInicial.intMes=retornoFinal.intMes-1;
         if(retornoInicial.intMes==0)
             retornoInicial.intMes=12;
+        retornoInicial.intAno = retornoFinal.intAno;
     }
     
     if(retornoInicial.intMes==1 || retornoInicial.intMes==3 || retornoInicial.intMes==5 || retornoInicial.intMes==7 || retornoInicial.intMes==8 || retornoInicial.intMes==10 || retornoInicial.intMes==12)
