@@ -28,7 +28,7 @@
 
 int main(){
     int options=1, retorno, qtdDias=-1, qtdMeses=-1, qtdAnos=-1;
-    char data[10], dataInicial[10], dataFinal[10];
+    char data[11], dataInicial[11], dataFinal[11];
 
     while(options!=0)
     {
@@ -45,16 +45,16 @@ int main(){
         switch(options)
         {
             case 0: return 0; break;
-            case 1: strcpy(data,"29/2/2000");
+            case 1: strcpy(data,"29/02/2000");
                     retorno = q1(data);
                     if(retorno==0)
                         printf("Data Invalida\n");
                     else
                         printf("Data Valida\n");
                     break;
-            case 2: strcpy(dataInicial,"05/02/2000");
-                    strcpy(dataFinal,"29/02/2000");
-                    retorno = q2(dataInicial, dataFinal, qtdDias, qtdMeses, qtdAnos);
+            case 2: strcpy(dataInicial,"10/5/2000");
+                    strcpy(dataFinal,"5/3/2015");
+                    retorno = q2(dataInicial, dataFinal, &qtdDias, &qtdMeses, &qtdAnos);
                     switch(retorno)
                     {
                         case 1: printf("Calculo de Diferenca Realizado Com Sucesso\n"); break;
@@ -114,7 +114,7 @@ int fatorial(int x){ //função utilizada para testes
 int q1(char data[]){
 
     int i, j, intDia, intMes, intAno;
-    char strDia[3], strMes[3], strAno[3];
+    char strDia[3], strMes[3], strAno[5];
 
     if(strlen(data)>10)
         return 0;
@@ -229,7 +229,7 @@ int validaData(int Dia, int Mes, int Ano)
 int q2(char datainicial[], char datafinal[], int *qtdDias, int *qtdMeses, int *qtdAnos){
     
     //calcule os dados e armazene nas três variáveis a seguir
-    int nDias, nMeses, nAnos, SomaData;
+    int nDias=0, nMeses=0, nAnos=0;
     inteirodata retornoInicial, retornoFinal;
 
     retornoInicial = quantidadeData(datainicial);
@@ -239,11 +239,40 @@ int q2(char datainicial[], char datafinal[], int *qtdDias, int *qtdMeses, int *q
     else if (retornoFinal.intDia == 0 || retornoFinal.intMes == 0 || retornoFinal.intAno == 0)
         return 3;
     
-    nAnos = retornoInicial.intAno - retornoFinal.intAno;
+    nAnos = retornoFinal.intAno - retornoInicial.intAno;
+    if(retornoInicial.intMes>retornoFinal.intMes)
+        nAnos-=1;
     
+    nMeses = (12-retornoInicial.intMes) + retornoFinal.intMes;
+    if(retornoInicial.intDia>retornoFinal.intDia)
+        nMeses-=1;
+    if(retornoInicial.intMes!=retornoFinal.intMes)
+    {
+        retornoInicial.intMes=retornoFinal.intMes-1;
+        if(retornoInicial.intMes==0)
+            retornoInicial.intMes=12;
+    }
+    
+    if(retornoInicial.intMes==1 || retornoInicial.intMes==3 || retornoInicial.intMes==5 || retornoInicial.intMes==7 || retornoInicial.intMes==8 || retornoInicial.intMes==10 || retornoInicial.intMes==12)
+        nDias = (31 - retornoInicial.intDia) + retornoFinal.intDia;
+    else
+    {
+        if (retornoInicial.intMes==4 || retornoInicial.intMes==6 || retornoInicial.intMes==9 || retornoInicial.intMes==11)
+            nDias = (30 - retornoInicial.intDia) + retornoFinal.intDia;
+        else
+        {
+            if((retornoInicial.intAno%4==0 && retornoInicial.intAno%100!=0) || retornoInicial.intAno%400==0)
+            {
+                if(retornoInicial.intMes == 2)
+                    nDias = (29 - retornoInicial.intDia) + retornoFinal.intDia;
+                else
+                    nDias = (28 - retornoInicial.intDia) + retornoFinal.intDia;
+            }
+        }
+    }
     
 
-    printf("Diferenca de %d Anos, %d Meses e %d Dias",nAnos, nMeses, nDias);
+    printf("Diferenca de %d Anos, %d Meses e %d Dias\n",nAnos, nMeses, nDias);
     /*mantenha o código abaixo, para salvar os dados em 
     nos parâmetros da funcao
     *qtdDias = nDias;
@@ -259,7 +288,7 @@ inteirodata quantidadeData(char data[])
 {
     inteirodata retorno;
     int i, j;
-    char strDia[3], strMes[3], strAno[3];
+    char strDia[3], strMes[3], strAno[5];
     for(i=0;data[i]!='/';i++)
     {
         strDia[i]=data[i];
@@ -319,9 +348,6 @@ inteirodata quantidadeData(char data[])
 
     strAno[j]='\0';
     retorno.intAno = atoi(strAno);
-    printf("%d  ",retorno.intDia);
-    printf("%d  ",retorno.intMes);
-    printf("%d  ",retorno.intAno);
     if(strlen(strAno) == 0 || j==1 || j==3) 
        return retorno;
     
