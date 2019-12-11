@@ -27,8 +27,8 @@
 #include "LuanPinheiro-2019116025-T1.h"
 
 int main(){
-    int options=1, retorno, qtdDias=-1, qtdMeses=-1, qtdAnos=-1;
-    char data[11], dataInicial[11], dataFinal[11];
+    int options=1, retorno, qtdDias=-1, qtdMeses=-1, qtdAnos=-1, isCaseSensitive;
+    char data[11], dataInicial[11], dataFinal[11], texto[255], c;
 
     while(options!=0)
     {
@@ -67,7 +67,16 @@ int main(){
                         case 4: printf("Data Inicial > Data Final\n");break;
                     }
                     break;
-            //case 3: q3(); break;
+            case 3: printf("Eh case sensitive?\n");
+                    scanf("%d",&isCaseSensitive);
+                    getchar();
+                    printf("Digite o Texto\n");
+                    fgets(texto,255,stdin);
+                    printf("Digite o Caractere\n");
+                    scanf("%c",&c);
+                    retorno = q3(&texto, c, isCaseSensitive);
+                    printf("Ocorrencias:%d\n", retorno);
+                    break;
             //case 4: q4(); break;
             //case 5: q5(); break;
             //case 6: q6(); break;
@@ -342,7 +351,37 @@ inteirodata quantidadeData(char data[])
     Um número n >= 0.
  */
 int q3(char *texto, char c, int isCaseSensitive){
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias=0, i, j, tamanho;
+
+    tamanho = strlen(texto);
+    texto[tamanho]='\0';
+    if (isCaseSensitive==1)
+    {
+        for(i=0;i<tamanho;i++)
+            if (texto[i]==c)
+                qtdOcorrencias++;
+    }
+    else
+    {
+        for(i=0;i<tamanho;i++)
+        {
+            if(texto[i]==c)
+                qtdOcorrencias++;
+            else
+            {
+                if(c>=65 && c<=90)
+                {
+                    if(texto[i]==c+32)
+                        qtdOcorrencias++;
+                }
+                else if(c>=97 && c<=122)
+                {
+                    if(texto[i]==c-32)
+                        qtdOcorrencias++;
+                }
+            }
+        }
+    }
 
     return qtdOcorrencias;
 
