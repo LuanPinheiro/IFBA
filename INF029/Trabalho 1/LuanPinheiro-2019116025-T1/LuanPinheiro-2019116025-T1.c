@@ -64,7 +64,7 @@ int main(){
                         case 1: printf("Calculo de Diferenca Realizado Com Sucesso\n"); break;
                         case 2: printf("Data Inicial Invalida\n"); break;
                         case 3: printf("Data Final Invalida\n"); break;
-                        case 4: break;
+                        case 4: printf("Data Inicial > Data Final\n");break;
                     }
                     break;
             //case 3: q3(); break;
@@ -194,6 +194,10 @@ int q2(char datainicial[], char datafinal[], int *qtdDias, int *qtdMeses, int *q
         return 2;
     else if (retornoFinal.intDia == 0 || retornoFinal.intMes == 0 || retornoFinal.intAno == 0)
         return 3;
+    if(retornoInicial.intAno>=retornoFinal.intAno)
+        if(retornoInicial.intMes>=retornoFinal.intMes)
+            if(retornoInicial.intDia>retornoFinal.intDia)
+                return 4;
     
     nAnos = retornoFinal.intAno - retornoInicial.intAno;
     if(retornoInicial.intMes>retornoFinal.intMes)
@@ -213,33 +217,40 @@ int q2(char datainicial[], char datafinal[], int *qtdDias, int *qtdMeses, int *q
         if(retornoInicial.intMes==0)
             retornoInicial.intMes=12;
         retornoInicial.intAno = retornoFinal.intAno;
-    }
-    
-    if(retornoInicial.intMes==1 || retornoInicial.intMes==3 || retornoInicial.intMes==5 || retornoInicial.intMes==7 || retornoInicial.intMes==8 || retornoInicial.intMes==10 || retornoInicial.intMes==12)
-        nDias = (31 - retornoInicial.intDia) + retornoFinal.intDia;
-    else
-    {
-        if (retornoInicial.intMes==4 || retornoInicial.intMes==6 || retornoInicial.intMes==9 || retornoInicial.intMes==11)
-            nDias = (30 - retornoInicial.intDia) + retornoFinal.intDia;
+        if(retornoInicial.intDia==retornoFinal.intDia)
+            nDias = 0;
+        else if(retornoInicial.intMes==1 || retornoInicial.intMes==3 || retornoInicial.intMes==5 || retornoInicial.intMes==7 || retornoInicial.intMes==8 || retornoInicial.intMes==10 || retornoInicial.intMes==12)
+            nDias = (31 - retornoInicial.intDia) + retornoFinal.intDia;
         else
         {
-            if((retornoInicial.intAno%4==0 && retornoInicial.intAno%100!=0) || retornoInicial.intAno%400==0)
+            if (retornoInicial.intMes==4 || retornoInicial.intMes==6 || retornoInicial.intMes==9 || retornoInicial.intMes==11)
+                nDias = (30 - retornoInicial.intDia) + retornoFinal.intDia;
+            else
             {
-                if(retornoInicial.intMes == 2)
-                    nDias = (29 - retornoInicial.intDia) + retornoFinal.intDia;
+                if((retornoInicial.intAno%4==0 && retornoInicial.intAno%100!=0) || retornoInicial.intAno%400==0)
+                {
+                    if(retornoInicial.intMes == 2)
+                        nDias = (29 - retornoInicial.intDia) + retornoFinal.intDia;
+                }
                 else
                     nDias = (28 - retornoInicial.intDia) + retornoFinal.intDia;
             }
         }
     }
+    else
+        nDias = retornoFinal.intDia - retornoInicial.intDia;
+    if(nMeses == -1)
+        nMeses=0;
+    if(nDias==-1)
+        nDias=0;
     
 
     printf("Diferenca de %d Anos, %d Meses e %d Dias\n",nAnos, nMeses, nDias);
     /*mantenha o código abaixo, para salvar os dados em 
-    nos parâmetros da funcao
+    nos parâmetros da funcao*/
     *qtdDias = nDias;
     *qtdAnos = nAnos;
-    *qtdMeses = nMeses;*/
+    *qtdMeses = nMeses;
 
     //coloque o retorno correto
     return 1;
