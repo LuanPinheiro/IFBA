@@ -27,8 +27,8 @@
 #include "LuanPinheiro-2019116025-T1.h"
 
 int main(){
-    int options=1, retorno, qtdDias=-1, qtdMeses=-1, qtdAnos=-1, isCaseSensitive;
-    char data[11], dataInicial[11], dataFinal[11], texto[255], c;
+    int options=1, retorno, qtdDias=-1, qtdMeses=-1, qtdAnos=-1, isCaseSensitive, num, posicoes[30];
+    char data[11], dataInicial[11], dataFinal[11], texto[255], strBusca[255], c;
 
     while(options!=0)
     {
@@ -71,14 +71,21 @@ int main(){
                     scanf("%d",&isCaseSensitive);
                     getchar();
                     printf("Digite o Texto\n");
-                    fgets(texto,255,stdin);
+                    fgets(texto,250,stdin);
                     printf("Digite o Caractere\n");
                     scanf("%c",&c);
-                    retorno = q3(&texto, c, isCaseSensitive);
-                    printf("Ocorrencias:%d\n", retorno);
+                    printf("Ocorrencias do caractere '%c': %d\n", c, q3(texto, c, isCaseSensitive));
                     break;
-            //case 4: q4(); break;
-            //case 5: q5(); break;
+            case 4: printf("Digite o Texto\n");
+                    fgets(texto,250,stdin);
+                    getchar();
+                    printf("Digite o que deseja buscar\n");
+                    fgets(strBusca,250,stdin);
+                    printf("Ocorrencias da string %s em %s: %d\n", strBusca, texto, q4(texto, strBusca, posicoes));
+                    break;
+            case 5: printf("Digite um numero: \n");
+                    scanf("%d",&num);
+                    q5(num); break;
             //case 6: q6(); break;
         }
     }
@@ -351,7 +358,7 @@ inteirodata quantidadeData(char data[])
     Um número n >= 0.
  */
 int q3(char *texto, char c, int isCaseSensitive){
-    int qtdOcorrencias=0, i, j, tamanho;
+    int qtdOcorrencias=0, i, tamanho;
 
     tamanho = strlen(texto);
     texto[tamanho]='\0';
@@ -402,10 +409,44 @@ int q3(char *texto, char c, int isCaseSensitive){
         O retorno da função, n, nesse caso seria 1;
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30]){
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0, i, j, k, l, tamanho, tamanho2, mudou;
 
+    tamanho=strlen(strTexto);
+    tamanho2=strlen(strBusca);
+    strTexto[tamanho]='\0';
+    strBusca[tamanho2]='\0';
+
+    for(i=0,l=0;i<tamanho;i++)
+    {
+        if(strTexto[i]==strBusca[0])
+        {
+            printf("ENTROU");
+            for(j=0,k=i,mudou=1;j<tamanho2||k<tamanho-1;j++,k++)
+            {
+                printf("  strTexto[%d]:%c,strBusca[%d]:%c  ", k, strTexto[k], j, strBusca[j]);
+                if(strTexto[k]!=strBusca[j])
+                {
+                    mudou=0;
+                    printf("FALHOU ");
+                    break;
+                }
+            }
+
+            if(mudou!=0)
+            {
+                posicoes[l]=j-1;
+                posicoes[l+1]=i;
+                l+=2;
+                qtdOcorrencias++;
+                i=k;
+            }
+        }
+    }
+    for(i=0;i<l;i++)
+    {
+        //printf(" posicoes[%d]:%d\n ", i, posicoes[i]);
+    }
     return qtdOcorrencias;
-
 }
 
 /*
@@ -419,12 +460,15 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
  */
 
 int q5(int num){
+    int i;
+
+    
 
     return num;
 }
 
 /*
- Q5 = ocorrência de um número em outro
+ Q6 = ocorrência de um número em outro
  @objetivo
     Verificar quantidade de vezes da ocorrência de um número em outro
  @entrada
