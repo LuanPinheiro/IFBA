@@ -26,70 +26,6 @@
 #include <string.h>
 #include "LuanPinheiro-2019116025-T1.h"
 
-int main(){
-    int options=1, retorno, qtdDias=-1, qtdMeses=-1, qtdAnos=-1, isCaseSensitive, num, posicoes[30];
-    char data[11], dataInicial[11], dataFinal[11], texto[255], strBusca[255], c;
-
-    while(options!=0)
-    {
-        printf("0.Fechar o Programa\n");
-        printf("1.Questao 1\n");
-        printf("2.Questao 2\n");
-        printf("3.Questao 3\n");
-        printf("4.Questao 4\n");
-        printf("5.Questao 5\n");
-        printf("6.Questao 6\n");
-
-        scanf("%d",&options);
-        getchar();
-        switch(options)
-        {
-            case 0: return 0; break;
-            case 1: printf("Digite uma data: ");
-                    fgets(data,11,stdin);
-                    retorno = q1(data);
-                    if(retorno==0)
-                        printf("Data Invalida\n");
-                    else
-                        printf("Data Valida\n");
-                    break;
-            case 2: printf("Digite a data inicial: ");
-                    fgets(dataInicial,11,stdin);
-                    getchar();
-                    printf("Digite a data final: ");
-                    fgets(dataFinal,11,stdin);
-                    retorno = q2(dataInicial, dataFinal, &qtdDias, &qtdMeses, &qtdAnos);
-                    switch(retorno)
-                    {
-                        case 1: printf("Calculo de Diferenca Realizado Com Sucesso\n"); break;
-                        case 2: printf("Data Inicial Invalida\n"); break;
-                        case 3: printf("Data Final Invalida\n"); break;
-                        case 4: printf("Data Inicial > Data Final\n");break;
-                    }
-                    break;
-            case 3: printf("Eh case sensitive?\n");
-                    scanf("%d",&isCaseSensitive);
-                    getchar();
-                    printf("Digite o Texto\n");
-                    fgets(texto,250,stdin);
-                    printf("Digite o Caractere\n");
-                    scanf("%c",&c);
-                    printf("Ocorrencias do caractere '%c': %d\n", c, q3(texto, c, isCaseSensitive));
-                    break;
-            case 4: printf("Digite o Texto\n");
-                    fgets(texto,250,stdin);
-                    getchar();
-                    printf("Digite o que deseja buscar\n");
-                    fgets(strBusca,250,stdin);
-                    printf("Ocorrencias da string %s em %s: %d\n", strBusca, texto, q4(texto, strBusca, posicoes));
-                    break;
-            case 5: printf("Digite um numero: \n");
-                    scanf("%d",&num);
-                    q5(num); break;
-            //case 6: q6(); break;
-        }
-    }
-}
 /*
 ## função utilizada para testes  ##
  somar = somar dois valores
@@ -131,7 +67,7 @@ int fatorial(int x){ //função utilizada para testes
     0 -> se data inválida
     1 -> se data válida
  */
-int q1(char data[]){
+int q1(char *data){
     
     inteirodata retorno;
     
@@ -198,7 +134,7 @@ int validaData(int Dia, int Mes, int Ano)
     3 -> datafinal inválida
     4 -> datainicial > datafinal
  */
-int q2(char datainicial[], char datafinal[], int *qtdDias, int *qtdMeses, int *qtdAnos){
+int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtdAnos){
     
     //calcule os dados e armazene nas três variáveis a seguir
     int nDias=0, nMeses=0, nAnos=0;
@@ -210,14 +146,22 @@ int q2(char datainicial[], char datafinal[], int *qtdDias, int *qtdMeses, int *q
         return 2;
     else if (retornoFinal.intDia == 0 || retornoFinal.intMes == 0 || retornoFinal.intAno == 0)
         return 3;
-    if(retornoInicial.intAno>=retornoFinal.intAno)
-        if(retornoInicial.intMes>=retornoFinal.intMes)
-            if(retornoInicial.intDia>retornoFinal.intDia)
-                return 4;
     
+    if(retornoInicial.intAno>retornoFinal.intAno)
+        return 4;
+    else
+        if(retornoInicial.intAno==retornoFinal.intAno)
+            if(retornoInicial.intMes>retornoFinal.intMes)
+                return 4;
+            else
+                if(retornoInicial.intMes==retornoFinal.intMes)
+                    if(retornoInicial.intDia>retornoFinal.intDia)
+                        return 4;
+    
+
     nAnos = retornoFinal.intAno - retornoInicial.intAno;
     if(retornoInicial.intMes>retornoFinal.intMes)
-        nAnos-=1;
+        nAnos--;
     
     
     if(retornoInicial.intMes>retornoFinal.intMes)
@@ -227,37 +171,53 @@ int q2(char datainicial[], char datafinal[], int *qtdDias, int *qtdMeses, int *q
     
     if(retornoInicial.intDia>retornoFinal.intDia)
         nMeses--;
-    if(retornoInicial.intMes!=retornoFinal.intMes)
+    
+
+    if(retornoInicial.intMes!=retornoFinal.intMes && retornoFinal.intDia>retornoInicial.intDia && )
     {
         retornoInicial.intMes=retornoFinal.intMes-1;
         if(retornoInicial.intMes==0)
+        {
             retornoInicial.intMes=12;
-        retornoInicial.intAno = retornoFinal.intAno;
-        if(retornoInicial.intDia==retornoFinal.intDia)
-            nDias = 0;
-        else if(retornoInicial.intMes==1 || retornoInicial.intMes==3 || retornoInicial.intMes==5 || retornoInicial.intMes==7 || retornoInicial.intMes==8 || retornoInicial.intMes==10 || retornoInicial.intMes==12)
-            nDias = (31 - retornoInicial.intDia) + retornoFinal.intDia;
+            retornoInicial.intAno = retornoFinal.intAno-1;
+        }
         else
         {
-            if (retornoInicial.intMes==4 || retornoInicial.intMes==6 || retornoInicial.intMes==9 || retornoInicial.intMes==11)
-                nDias = (30 - retornoInicial.intDia) + retornoFinal.intDia;
+            if((retornoInicial.intMes==1 || retornoInicial.intMes==3 || retornoInicial.intMes==5 || retornoInicial.intMes==7 || retornoInicial.intMes==8 || retornoInicial.intMes==10 || retornoInicial.intMes==12))
+            {
+                nDias = (31 - retornoInicial.intDia) + retornoFinal.intDia;
+            }
             else
             {
-                if((retornoInicial.intAno%4==0 && retornoInicial.intAno%100!=0) || retornoInicial.intAno%400==0)
+                if (retornoInicial.intMes==4 || retornoInicial.intMes==6 || retornoInicial.intMes==9 || retornoInicial.intMes==11)
                 {
-                    if(retornoInicial.intMes == 2)
-                        nDias = (29 - retornoInicial.intDia) + retornoFinal.intDia;
+                    nDias = (30 - retornoInicial.intDia) + retornoFinal.intDia;
                 }
                 else
-                    nDias = (28 - retornoInicial.intDia) + retornoFinal.intDia;
+                {
+                    if((retornoInicial.intAno%4==0 && retornoInicial.intAno%100!=0) || retornoInicial.intAno%400==0)
+                    {
+                        if(retornoInicial.intMes == 2)
+                        {
+                            nDias = (29 - retornoInicial.intDia) + retornoFinal.intDia;
+                        }
+                    }
+                    else
+                    {
+                        nDias = (28 - retornoInicial.intDia) + retornoFinal.intDia;
+                    }
+                }
             }
         }
     }
     else
         nDias = retornoFinal.intDia - retornoInicial.intDia;
+    
+    if(nAnos == -1)
+        nAnos=0;
     if(nMeses == -1)
         nMeses=0;
-    if(nDias==-1)
+    if(nDias == -1)
         nDias=0;
     
 
@@ -461,8 +421,6 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
 
 int q5(int num){
     int i;
-
-    
 
     return num;
 }
