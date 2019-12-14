@@ -161,11 +161,10 @@ int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtd
 
     nAnos = retornoFinal.intAno - retornoInicial.intAno;
     if(retornoInicial.intMes>retornoFinal.intMes)
+    {
         nAnos--;
-    
-    
-    if(retornoInicial.intMes>retornoFinal.intMes)
         nMeses = (12-retornoInicial.intMes) + retornoFinal.intMes;
+    }
     else
         nMeses = retornoFinal.intMes - retornoInicial.intMes;
     
@@ -173,7 +172,7 @@ int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtd
         nMeses--;
     
 
-    if(retornoInicial.intMes!=retornoFinal.intMes && retornoFinal.intDia>retornoInicial.intDia && )
+    if(retornoInicial.intMes!=retornoFinal.intMes && retornoInicial.intDia>retornoFinal.intDia)
     {
         retornoInicial.intMes=retornoFinal.intMes-1;
         if(retornoInicial.intMes==0)

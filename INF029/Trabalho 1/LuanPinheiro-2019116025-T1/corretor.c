@@ -171,7 +171,6 @@ void testQ2(){
     printf("%d\n",qtdAnos == 1);
 
 
-
     //teste 2 - retornos
 
     qtdDias = -1;
@@ -219,22 +218,22 @@ void testQ2(){
     qtdMeses = -1;
 
     qtdAnos = -1;
+    
 
 
+    strcpy(datainicial,"29/02/2016");
 
-    strcpy(datainicial,"06/06/2017");
-
-    strcpy(datafinal,"07/07/2017");
+    strcpy(datafinal,"28/02/2020");
 
     retorno = q2(datainicial, datafinal, &qtdDias, &qtdMeses, &qtdAnos);
 
     printf("%d\n",retorno == 1);
 
-    printf("%d\n",qtdDias == 1);
+    printf("%d\n",qtdDias == 0);
 
     printf("%d\n",qtdMeses == 1);
 
-    printf("%d\n",qtdAnos == 0);
+    printf("%d\n",qtdAnos == 3);
 
 
 
