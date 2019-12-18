@@ -418,8 +418,42 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
     Número invertido
  */
 
-int q5(int num){
-    int i;
+int q5(int num)
+{
+    int i, j, x, aux[200], final=0;
+    char sNum[200];
+    
+    int ultimonumeroEhzero = 0;
+    
+    if (num/10 == 0) 
+        ultimonumeroEhzero = 1;
+    
+    for(x=0;num!=0;x++)
+    {
+        aux[x]=num%10;
+        num=num/10;
+        printf("posicao:%d, Numero:%d\n",x,aux[x]);
+    }
+    
+    
+        
+    
+    for(i=0,j=x;i<x;i++,j--)
+    {
+            aux[i]=aux[i] * mypow(j);
+            final+=aux[i];
+            printf("FINAL:%d\n",final);
+    }
+    
+    if(aux[i]!=0)
+    {
+        aux[i]=aux[i] * mypow(j);
+        final+=aux[i];
+        printf("FINAL:%d\n",final);
+    }
+
+    
+    num=final;
 
     return num;
 }
@@ -435,6 +469,23 @@ int q5(int num){
  */
 
 int q6(int numerobase, int numerobusca){
-    int qtdOcorrencias;
+    int qtdOcorrencias=0, i;
+    
+    for(i=0;(numerobusca/10)!=0;i++)
+    {}
+    
     return qtdOcorrencias;
+}
+
+int mypow(int j)
+{
+    int i, retorno=1;
+    
+    while(j>0)
+    {
+        retorno*=10;
+        j--;
+    }
+        
+    return retorno;
 }

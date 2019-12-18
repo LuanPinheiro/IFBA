@@ -31,7 +31,6 @@
 
 
 #include<stdio.h>
-
 #include<string.h>
 
 
@@ -68,13 +67,13 @@ int main(){
 
     //testQ1(); // Tudo Certo
 
-    testQ2(); // Quase Tudo Certo
+    //testQ2(); // Quase Tudo Certo
 
     //testQ3(); // Quase Tudo Certo
 
     //testQ4(); // Erro em todas
 
-    //testQ5(); // Incompleto
+    testQ5(); // Incompleto
 
     //testQ6(); // Incompleto
 
@@ -330,12 +329,23 @@ void testQ4(){
 void testQ5(){
 
     printf("%d\n",q5(345) == 543);
+    printf("%d\n",q5(1010) == 1010);
 
-    printf("%d\n",q5(78) == 87);
+    /*printf("%d\n",q5(78) == 87);
 
     printf("%d\n",q5(3) == 3);
 
     printf("%d\n",q5(5430) == 345);
+    
+    printf("%d\n",q5(111) == 111);
+    
+    printf("%d\n",q5(1) == 1);
+    
+    printf("%d\n",q5(12) == 21);
+    
+    printf("%d\n",q5(7945) == 5497);
+    
+    */
 
 }
 
