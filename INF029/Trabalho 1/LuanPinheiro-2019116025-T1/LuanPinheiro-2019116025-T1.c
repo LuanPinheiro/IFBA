@@ -435,9 +435,6 @@ int q5(int num)
         printf("posicao:%d, Numero:%d\n",x,aux[x]);
     }
     
-    
-        
-    
     for(i=0,j=x;i<x;i++,j--)
     {
             aux[i]=aux[i] * mypow(j);
