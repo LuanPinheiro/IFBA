@@ -1,12 +1,14 @@
 #include <stdio.h>
 
 typedef struct{
-  char nome[20];
+  char nome[60];
   float nota1;
   float nota2;
   float media;
   int ap_rp;
 }ficha_aluno;
+
+void LimparString(char string[]);
 
 int main(void) {
   ficha_aluno alunos[15];
@@ -14,7 +16,10 @@ int main(void) {
 
   for(i=0;i<15;i++)
   {
-    scanf("%s", alunos[i].nome);
+    getchar();
+    fgets(alunos[i].nome, 60, stdin);
+    LimparString(alunos[i].nome);
+    
     scanf("%f", &alunos[i].nota1);
     scanf("%f", &alunos[i].nota2);
     alunos[i].media = (alunos[i].nota1 + alunos[i].nota2) / 2;
@@ -37,4 +42,10 @@ int main(void) {
   }
 
   return 0;
+}
+
+void LimparString(char string[]){
+  for(int i=0;string[i] != '\0';i++)
+      if(string[i] == '\n')
+        string[i] = '\0';
 }
