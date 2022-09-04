@@ -6,7 +6,7 @@ int main()
    int natalidade_b = 7000000;
    int anos;
    
-   for(anos=0; natalidade_a < natalidade_b; anos++){
+   for(anos=0; natalidade_a <= natalidade_b; anos++){
        natalidade_a += natalidade_a * 0.03;
        natalidade_b += natalidade_b * 0.02;
    }
