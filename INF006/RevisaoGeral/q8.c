@@ -13,6 +13,10 @@ int main(void) {
   media += n[0];
   maior = n[0];
   menor = n[0];
+  if(n[0]%2==0){
+    par[cont_par] = n[i];
+    cont_par++;
+  }
   
   for(i=1;i<tam;i++)
   {
@@ -25,7 +29,7 @@ int main(void) {
     if (n[i]<menor)
       menor = n[i];
 
-    if(n[i]%2 == 0)
+    if(n[i]%2==0)
     {
       par[cont_par] = n[i];
       cont_par++;
@@ -36,7 +40,7 @@ int main(void) {
 
   percent_par = ((float)cont_par / tam) * 100.0;
 
-  printf("\nVetor:\n");
+  printf("\nVetor:");
   for(i=0;i<tam;i++)
     printf("%d ", n[i]);
   printf("Maior valor: %d\n", maior);
