@@ -3,12 +3,11 @@
 #include <stdbool.h>
 
 int main(){
-  int vet[10], menor, check, aux, j;
+  int vet[10], aux, i, j;
 
-  for(int i=0;i<10;i++){
+  for(i=0;i<10;i++){
     printf("digite um numero: ");
     scanf("%d", &vet[i]);
-    menor=i;
     for(j=0;j<i;j++)
       if(vet[i]<vet[j]){
         aux=vet[i];

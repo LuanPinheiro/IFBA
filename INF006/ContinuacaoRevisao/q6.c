@@ -3,14 +3,13 @@
 #include <stdbool.h>
 
 int main(){
-  int mat[10][10], l1, l2, c1, c2, aux, preencher_m=10;
+  int mat[10][10], l1, l2, c1, c2, aux;
 
   printf("A matriz original: \n\n");
   for(l1=0;l1<10;l1++){
+    printf("Linha %d:\n", l1+1);
     for(c1=0;c1<10;c1++){
-      mat[l1][c1] = preencher_m;
-      printf("[%d] ", mat[l1][c1]);
-      preencher_m++;
+      scanf("%d", &mat[l1][c1]);
     }
     printf("\n\n");
   }
