@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define n 8
+#define n 10
 
 int main(void) {
   int i, j, menor, aux, vet[n];
@@ -12,7 +12,7 @@ int main(void) {
     menor = i;              // n-1
     for(j=i+1;j<n;j++)      // n*(n-1)/2
       if(vet[j]<vet[menor]) // n*(n-1)/2
-        menor = j;
+        menor = j;          // n*(n-1)/2
     
     if(menor!=i){           // n-1
       aux = vet[i];         // n-1
@@ -21,7 +21,7 @@ int main(void) {
     }
   }
 
-  // Progressão Aritmética = n*(n-1)/2, estrutura: elemento1+elementofinal*(qtd elementos)/2
+  // Progressão Aritmética = n*(n-1)/2, estrutura: (elemento1+elementofinal)*(qtd elementos)/2
   // T(n) ~ n^2
 
   // Linear para trocas. (n-1)

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define n 8
+#define n 10
 
 // Em um vetor "vet[n]" ORDENADO, busca um numero "num", utilizando um método de encontrar o meio do vetor e checar se é maior ou menor que o valor de vet[meio], e fazendo o meio se tornar o inicio/fim da proxima checagem, gerando um novo meio
 

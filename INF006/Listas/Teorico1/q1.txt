@@ -1,0 +1,11 @@
+// Qual a ordem entre as funções 2n, 1, n, n^2, n^3, n^4, n!, n*log2n e log2n para valores de n grandes?
+
+1 - (Apenas 1 passo, em qualquer caso)
+log2n - (Logaritmica, ao dobrar o tamanho do vetor, aumenta a quantidade de passos em 1)
+n*log2n - (Linear e logaritmica, um pouco maior que o log2n por chegar mais proximo a ser linear)
+n - (Linear, para um tamanho de vetor n, faz n passos)
+2n - (Linear, faz o dobro do tamanho do vetor de passos)
+n^2 - (Quadrática, escala exponencialmente ao quadrado do tamanho do vetor)
+n^3 - (Cúbica, escala exponencialmente ao cubo do tamanho do vetor)
+n^4 - (Escala exponencialmente a 4ª potencia do tamanho do vetor)
+n! - (Aumenta na escala fatorial, o pior tipo)

@@ -1,0 +1,26 @@
+// a) Apresente um algoritmo de busca em um vetor de tamanho N e a sua complexidade em notação O.
+
+Dado um vetor de tamanho n, irá começar da posição 0 até encontrar o numero desejado
+
+for(i=0;i<n;i++){         							// n
+		if(vet[i]==num){  							// n
+			break;        							// n
+		}
+	}
+if(i<n)                   							// 1
+	printf("Numero encontrado na posicao: %d", i);  // 1
+
+T(n) = 3n+1
+O(n) = n
+Notação linear
+
+########################################################################################################
+// b) Suponha que o vetor está ordenado, apresente um algoritmo de busca eficiente e a sua complexidade.
+
+
+
+// c) Suponha que você mantém um vetor de tamanho máximo N, ordenado e com M posições preenchidas.
+Desta forma você pode usar um algoritmo otimizado para busca no vetor ordenado. Apresente um
+algoritmo de inserção eficiente para inserir um novo elemento neste vetor, mantendo-o e indique qual a
+complexidade deste algoritmo de inserção. Dica: um algoritmo de ordenação pode ser base de sua
+solução.
