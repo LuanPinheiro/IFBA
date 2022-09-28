@@ -1,6 +1,6 @@
 // a) Apresente um algoritmo de busca em um vetor de tamanho N e a sua complexidade em notação O.
 
-Dado um vetor de tamanho n, irá começar da posição 0 até encontrar o numero desejado
+//Dado um vetor de tamanho n, irá começar da posição 0 até encontrar o numero desejado, Busca Sequencial
 
 for(i=0;i<n;i++){         							// n
 		if(vet[i]==num){  							// n
@@ -10,17 +10,49 @@ for(i=0;i<n;i++){         							// n
 if(i<n)                   							// 1
 	printf("Numero encontrado na posicao: %d", i);  // 1
 
-T(n) = 3n+1
-O(n) = n
-Notação linear
+// T(n)=3n+1
+// O(n)=n
+// Notação linear
 
 ########################################################################################################
 // b) Suponha que o vetor está ordenado, apresente um algoritmo de busca eficiente e a sua complexidade.
 
+// Iniciando na metade do vetor, checa se está nessa posição ou num valor maior ou menor que o meio, se não encontrar irá gerar um novo meio baseado no que encontrar antes, Busca Binária
 
+while(vet[ini]<=vet[fim]){
+	meio = (ini + fim) / 2;
+	
+	if(num == vet[meio])
+  		break;
+	else if(vet[meio] < num)
+  		ini = meio + 1;
+	else
+  		fim = meio - 1;
+	
+	check++;
+}
 
+// O(n)=log2n, bastante eficiente, ao dobrar a entrada aumenta a quantidade de passos em 1
+// Notação logaritmica
+
+########################################################################################################
 // c) Suponha que você mantém um vetor de tamanho máximo N, ordenado e com M posições preenchidas.
 Desta forma você pode usar um algoritmo otimizado para busca no vetor ordenado. Apresente um
 algoritmo de inserção eficiente para inserir um novo elemento neste vetor, mantendo-o e indique qual a
 complexidade deste algoritmo de inserção. Dica: um algoritmo de ordenação pode ser base de sua
 solução.
+
+// Insertion Sort, bom em casos de vetores quase ordenados, quadrático em outras situações
+
+for(i=1;i<n;i++){           			// n-1
+		key=vet[i];						// n-1
+		for(j=i-1;j>=0;j--){       		// (n*(n-1)/2)
+			if(vet[j]>key){				// (n*(n-1)/2)
+				vet[j+1] = vet[j];		// (n*(n-1)/2)
+			}
+			vet[j] = key;				// n-1
+		}
+	}
+
+// O(n)=n^2
+// Notação quadrática
