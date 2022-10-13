@@ -19,6 +19,7 @@ typedef struct{
 int incluirPessoa(person pessoas[], int qtd);
 int excluirPessoa(person pessoas[], int qtd);
 void consultarPessoa(person pessoas[], int qtd);
+int trueIndex(person pessoas[], int qtd);
 void limparString(char string[]);
 
 int main(){
@@ -45,7 +46,7 @@ int main(){
 
 int incluirPessoa(person pessoas[], int qtd){
 	system("clear");
-	int index = trueIndex(qtd, pessoas);
+	int index = trueIndex(pessoas, qtd);
 	int i, count;
 	
 	printf("Digite o nome da pessoa: ");
@@ -135,7 +136,7 @@ void consultarPessoa(person pessoas[], int qtd){
 	getchar();
 }
 
-int trueIndex(int qtd, person pessoas[]){
+int trueIndex(person pessoas[], int qtd){
 	int index, count;
 
 	for(index = 0, count = 0; count < qtd; index++){

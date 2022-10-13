@@ -19,7 +19,7 @@ typedef struct{
 int incluirCarro(carros carros[], int qtd);
 int excluirCarro(carros carros[], int qtd);
 void consultarCarro(carros carros[], int qtd);
-int trueIndex(int qtd, carros garagem[]);
+int trueIndex(carros garagem[], int qtd);
 void limparString(char string[]);
 
 int main(){
@@ -46,7 +46,7 @@ int main(){
 
 int incluirCarro(carros garagem[], int qtd){
 	system("cls");
-	int index = trueIndex(qtd, garagem);
+	int index = trueIndex(garagem, qtd);
 
 	printf("Digite a placa do carro: ");
 	fgets(garagem[index].placa, 10, stdin);
@@ -136,7 +136,7 @@ void consultarCarro(carros garagem[], int qtd){
 	getchar();
 }
 
-int trueIndex(int qtd, carros garagem[]){
+int trueIndex(carros garagem[], int qtd){
 	int index, count;
 
 	for(index = 0, count = 0; count < qtd; index++){
