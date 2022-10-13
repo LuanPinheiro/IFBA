@@ -14,7 +14,7 @@ acima da média, e exibir o número de clientes que nasceram entre 1980 e 2000.*
 #define tam 100
 
 typedef struct{
-	char nome[52];
+	char nome[50];
 	int anoNascimento;
 	int rendaMensal;
 	int cadastrado;
@@ -27,6 +27,7 @@ void exibirAcimaMedia(int rendaMedia, person pessoas[], int qtd);
 void exibirEspacoAnos(person pessoas[], int qtd);
 void printPessoa(person pessoa);
 int calcularMedia(int qtd, person pessoas[]);
+int validarNome(char validNome[]);
 int trueIndex(person pessoas[], int qtd);
 void limparString(char string[]);
 
@@ -45,10 +46,35 @@ int main(){
 		switch(op){
 			case 0: printf("\n\nFECHANDO O PROGRAMA"); return 0; break;
 			case 1: qtd = incluirPessoa(pessoas, qtd); rendaMensalMedia = calcularMedia(qtd, pessoas); break;
-			case 2: qtd = excluirPessoa(pessoas, qtd); rendaMensalMedia = calcularMedia(qtd, pessoas); break;
-			case 3: consultarPessoa(pessoas, qtd); break;
-            case 4: exibirAcimaMedia(rendaMensalMedia, pessoas, qtd); break;
-            case 5: exibirEspacoAnos(pessoas, qtd);
+			case 2: if(qtd > 0){
+				qtd = excluirPessoa(pessoas, qtd); 
+				rendaMensalMedia = calcularMedia(qtd, pessoas);
+				}
+				else{
+					printf("\n(NAO HA PESSOAS CADASTRADAS)\n");
+					getchar();
+				} break;
+			case 3: if(qtd > 0){
+				consultarPessoa(pessoas, qtd);
+				}
+				else{
+					printf("\n(NAO HA PESSOAS CADASTRADAS)\n");
+					getchar();
+				} break;
+            case 4: if(qtd > 0){
+				exibirAcimaMedia(rendaMensalMedia, pessoas, qtd);
+				}
+				else{
+					printf("\n(NAO HA PESSOAS CADASTRADAS)\n");
+					getchar();
+				} break;
+            case 5: if(qtd > 0){
+				exibirEspacoAnos(pessoas, qtd);
+				}
+				else{
+					printf("\n(NAO HA PESSOAS CADASTRADAS)\n");
+					getchar();
+				} break;
 			default: printf("\nOPCAO INVALIDA\n\n");
 		}
 	}while(op);
@@ -57,18 +83,46 @@ int main(){
 int incluirPessoa(person pessoas[], int qtd){
 	system("clear");
     int index = trueIndex(pessoas, qtd);
+	int valido;
 	
-	printf("Digite o nome da pessoa: ");
-	fgets(pessoas[index].nome, 52, stdin);
-	limparString(pessoas[index].nome);
+	do{
+		valido = true;
+		printf("Digite o nome da pessoa: ");
+		fgets(pessoas[index].nome, 50, stdin);
+		limparString(pessoas[index].nome);
+		if(strlen(pessoas[index].nome) < 3){
+			valido = false;
+		}
+		else{
+			valido = validarNome(pessoas[index].nome);
+		}
 
-	printf("Digite o ano de nascimento da pessoa: ");
-	scanf("%d", &pessoas[index].anoNascimento);
-    getchar();
+		if(valido == false){
+			printf("\n(ENTRADA INVALIDA)\n");
+		}
+	}while(valido != true);
 
-	printf("Digite a renda mensal da pessoa: ");
-	scanf("%d", &pessoas[index].rendaMensal);
-    getchar();
+	do{
+		valido = true;
+		printf("Digite o ano de nascimento da pessoa: ");
+		scanf("%d", &pessoas[index].anoNascimento);
+		getchar();
+		if(pessoas[index].anoNascimento < 1900){
+			valido = false;
+			printf("\n(ENTRADA INVALIDA)\n");
+		}
+	}while(valido != true);
+	
+	do{
+		valido = true;
+		printf("Digite a renda mensal da pessoa: ");
+		scanf("%d", &pessoas[index].rendaMensal);
+		getchar();
+		if(pessoas[index].rendaMensal < 0){
+			valido = false;
+			printf("\n(ENTRADA INVALIDA)\n");
+		}
+	}while(valido != true);
 	
 	pessoas[index].cadastrado = true;
 	return ++qtd;
@@ -202,6 +256,18 @@ int trueIndex(person pessoas[], int qtd){
 		}
 	}
 	return index;
+}
+
+//****************** Checa se há caracteres além de letras e espaços na string
+int validarNome(char validNome[]){
+  // checando se o primeiro caracter é um espaço
+  if(validNome[0]==32)
+    return true;
+  else for(int i=0;validNome[i]!='\0';i++)
+    if(validNome[i]!=32 && (validNome[i]>90 || validNome[i]<65))
+      return true;
+
+  return false;
 }
 
 // Usada para retirar o '\n' após inserir uma string[] via fgets()
