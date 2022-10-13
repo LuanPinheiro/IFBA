@@ -45,20 +45,22 @@ int main(){
 
 int incluirPessoa(person pessoas[], int qtd){
 	system("clear");
+	int index = trueIndex(qtd, pessoas);
+	int i, count;
 	
 	printf("Digite o nome da pessoa: ");
-	fgets(pessoas[qtd].nome, 52, stdin);
-	limparString(pessoas[qtd].nome);
+	fgets(pessoas[index].nome, 52, stdin);
+	limparString(pessoas[index].nome);
 
 	printf("Digite o endereco da pessoa: ");
-	fgets(pessoas[qtd].endereco, 52, stdin);
-	limparString(pessoas[qtd].endereco);
+	fgets(pessoas[index].endereco, 52, stdin);
+	limparString(pessoas[index].endereco);
 
 	printf("Digite o telefone da pessoa: ");
-	fgets(pessoas[qtd].telefone, 52, stdin);
-	limparString(pessoas[qtd].telefone);
+	fgets(pessoas[index].telefone, 52, stdin);
+	limparString(pessoas[index].telefone);
 	
-	pessoas[qtd].cadastrado = true;
+	pessoas[index].cadastrado = true;
 	return ++qtd;
 }
 
@@ -131,6 +133,20 @@ void consultarPessoa(person pessoas[], int qtd){
 	printf("\nEndereco da pessoa: %s", pessoas[i].endereco);
 	printf("\nTelefone da pessoa: %s\n\n", pessoas[i].telefone);
 	getchar();
+}
+
+int trueIndex(int qtd, person pessoas[]){
+	int index, count;
+
+	for(index = 0, count = 0; count < qtd; index++){
+		if(pessoas[index].cadastrado == false){
+			return index;
+		}
+		else if(pessoas[index].cadastrado == true){
+			count++;
+		}
+	}
+	return index;
 }
 
 // Usada para retirar o '\n' após inserir uma string[] via fgets()
