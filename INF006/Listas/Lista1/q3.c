@@ -19,6 +19,7 @@ typedef struct{
 int incluirCarro(carros carros[], int qtd);
 int excluirCarro(carros carros[], int qtd);
 void consultarCarro(carros carros[], int qtd);
+int trueIndex(int qtd, carros garagem[]);
 void limparString(char string[]);
 
 int main(){
@@ -45,20 +46,21 @@ int main(){
 
 int incluirCarro(carros garagem[], int qtd){
 	system("cls");
-	
+	int index = trueIndex(qtd, garagem);
+
 	printf("Digite a placa do carro: ");
-	fgets(garagem[qtd].placa, 10, stdin);
-	limparString(garagem[qtd].placa);
+	fgets(garagem[index].placa, 10, stdin);
+	limparString(garagem[index].placa);
 
 	printf("Digite a marca do carro: ");
-	fgets(garagem[qtd].marca, 10, stdin);
-	limparString(garagem[qtd].marca);
+	fgets(garagem[index].marca, 10, stdin);
+	limparString(garagem[index].marca);
 
 	printf("Digite a cor do carro: ");
-	fgets(garagem[qtd].cor, 10, stdin);
-	limparString(garagem[qtd].cor);
+	fgets(garagem[index].cor, 10, stdin);
+	limparString(garagem[index].cor);
 	
-	garagem[qtd].cadastrado = true;
+	garagem[index].cadastrado = true;
 	return ++qtd;
 }
 
@@ -132,6 +134,20 @@ void consultarCarro(carros garagem[], int qtd){
 	printf("\nMarca do carro: %s", garagem[i].marca);
 	printf("\nCor do carro: %s\n\n", garagem[i].cor);
 	getchar();
+}
+
+int trueIndex(int qtd, carros garagem[]){
+	int index, count;
+
+	for(index = 0, count = 0; count < qtd; index++){
+		if(garagem[index].cadastrado == false){
+			return index;
+		}
+		else if(garagem[index].cadastrado == true){
+			count++;
+		}
+	}
+	return index;
 }
 
 // Usada para retirar o '\n' após inserir uma string[] via fgets()
