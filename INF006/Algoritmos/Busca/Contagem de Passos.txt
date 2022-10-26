@@ -1,0 +1,20 @@
+for(i=x;i<n;x++) = n-x passos;
+for(i=1;i<n;i*=2) = logN passos; (impossivel de começar com 0 pois 0*i seria sempre == 0)
+for(i=n;i<n;i/=2) = n/2 passos; (Mesma coisa que o de cima, só que decrescente)
+
+Tudo que estiver dentro de um laço de repetição terá a quantidade de passos igual a do próprio laço, ex:
+
+for(i=x;i<n;x++){   // n-x passos;
+    a = x;          // n-x passos;
+    b = x*2;        // n-x passos;
+}
+
+Caso haja um laço dentro de outro laço, multiplique a quantidade de passos do laço em questão com o laço em que ele está contido, ex:
+for(i=x;i<n;x++){       // n-x passos;
+    for(j=y;j<n;j++){   // (n-x) * (n-y) passos;
+        a = x;          // (n-x) * (n-y) passos;
+        b = x*2;        // (n-x) * (n-y) passos;
+    }
+}
+
+Toda linha que não entre nesse critérios tem tempo de execução de 1 passos.

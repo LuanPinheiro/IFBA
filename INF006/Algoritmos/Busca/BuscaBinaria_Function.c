@@ -8,7 +8,7 @@ int BinarySearch(int vetor[], int inicio, int fim, int valor_buscado){
 		return -1; // O valor não foi encontrado
 	}
 
-	meio = (inicio + fim) / 2;
+	int meio = (inicio + fim) / 2;
 	
 	if(vetor[meio] == valor_buscado){
 		return meio; // O valor foi encontrado na posição em int que será retornada
