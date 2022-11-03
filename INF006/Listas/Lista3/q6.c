@@ -13,7 +13,7 @@ int main(){
     int vet3[n] = {21, 22, 23, 24, 25, 26, 27, 28};
     int vetOrdenado[n*3];
 
-	merge3_Sort(vetOrdenado, vet1, vet2, vet3);
+	merge3_Sort(vetOrdenado, vet1, vet2, vet3); // Terá complexidade O(n*logN), pois serão executados 3*n*LogN
 	
 	for(int i = 0; i < 3*n; i++){
 		printf("[%d] ", vetOrdenado[i]);

@@ -1,0 +1,44 @@
+Bubble Sort:
+Melhor..O(n²)
+Médio...O(n²)
+Pior....O(n²)
+O(n²) em comparações, O(n²) trocas
+Algoritmo de fácil implementação
+Estável
+Não usa memória auxiliar
+
+Selection Sort:
+Melhor..O(n²)
+Médio...O(n²)
+Pior....O(n²)
+O(n²) em comparações, O(n) em trocas
+Algoritmo de fácil implementação
+Não é Estável
+Não usa memória auxiliar
+
+Insertion Sort:
+Melhor..O(n)
+Médio...O(n²)
+Pior....O(n²)
+O(n²) em comparações, O(n²) em trocas, mas pode ser O(n) em ambos no melhor caso
+Algoritmo de fácil implementação
+Estável
+Não usa memória auxiliar
+
+Merge Sort:
+Melhor..O(n*LogN)
+Médio...O(n*LogN)
+Pior....O(n*LogN)
+O(n*LogN) em comparações, O(n*LogN) em trocas
+Algoritmo de difícil implementação, recursivo
+Estável
+Usa memória auxiliar, usa O(n*LogN) de espaço
+
+Quick Sort:
+Melhor..O(n*LogN)
+Médio...O(n*LogN)
+Pior....O(n²)
+O(n*LogN) em comparações, O(n*LogN) em trocas, com exceção do pior caso que será O(n²)
+Algoritmo de difícil implementação, recursivo
+Não é Estável
+Não usa memória auxiliar

@@ -1,5 +1,10 @@
 #include <stdio.h>
 
+// logN = Logaritmo de N na base 2
+// Ou seja: qual numero elevado a 2 vai resultar em N
+// Ex: Log de 8 na base 2 = 3 pois 2³ = 2*2*2 = 4*2 = 8
+// ao dobrar N aumenta em 1
+
 int main(){
     int i, n, x;
 
