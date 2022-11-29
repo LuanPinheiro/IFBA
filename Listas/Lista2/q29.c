@@ -7,7 +7,6 @@ conjuntos é representado por uma lista encadeada.*/
 #include <stdbool.h>
 
 typedef struct node{
-    struct node *ant;
     int valor;
     struct node *prox;
 }node;
@@ -33,20 +32,24 @@ int main(){
     criarConjunto2(conjunto2);
     criarConjunto3(conjunto3);
 
-    /*conjunto1 = unirConjuntos(conjunto1, conjunto2);
+	printf("OBS: Os conjuntos envolvidos nas operacoes se tornam iguais apos as modificacoes\n");
+    conjunto1 = unirConjuntos(conjunto1, conjunto2);
     conjunto2 = conjunto1;
-    printf("Conjuntos 1 e 2 unidos");
-    printaConjunto(conjunto1);*/
+    printf("\nConjuntos 1 e 2 unidos");
+    printaConjunto(conjunto1);
 
     conjunto2 = intersecaoConjuntos(conjunto2,conjunto3);
     conjunto3 = conjunto2;
-    printf("Intersecao dos conjuntos 2 e 3");
+    printf("\n\nIntersecao dos conjuntos 2 e 3");
     printaConjunto(conjunto2);
-    //diferencaConjuntos(conjunto1, conjunto3);
+
+    conjunto1 = diferencaConjuntos(conjunto1, conjunto3);
+	conjunto3 = conjunto1;
+	printf("\n\nDiferenca dos conjuntos 1 e 3");
+	printaConjunto(conjunto1);
 
     liberaLista(conjunto1);
     liberaLista(conjunto2);
-    liberaLista(conjunto3);
     return 0;
 }
 
@@ -69,15 +72,12 @@ void criarConjunto1(node *conjunto){
     node *nodo = malloc(sizeof(node));
     node *nodo2 = malloc(sizeof(node));
 
-    conjunto->ant = NULL;
     conjunto->valor = 5;
     conjunto->prox = nodo;
 
-    nodo->ant = conjunto;
     nodo->valor = 7;
     nodo->prox = nodo2;
 
-    nodo2->ant = nodo;
     nodo2->valor = 2;
     nodo2->prox = NULL;
 }
@@ -86,15 +86,12 @@ void criarConjunto2(node *conjunto){
     node *nodo = malloc(sizeof(node));
     node *nodo2 = malloc(sizeof(node));
 
-    conjunto->ant = NULL;
     conjunto->valor = 10;
     conjunto->prox = nodo;
 
-    nodo->ant = conjunto;
     nodo->valor = 5;
     nodo->prox = nodo2;
 
-    nodo2->ant = nodo;
     nodo2->valor = 3;
     nodo2->prox = NULL;
 }
@@ -103,15 +100,12 @@ void criarConjunto3(node *conjunto){
     node *nodo = malloc(sizeof(node));
     node *nodo2 = malloc(sizeof(node));
 
-    conjunto->ant = NULL;
     conjunto->valor = 3;
     conjunto->prox = nodo;
 
-    nodo->ant = conjunto;
     nodo->valor = 20;
     nodo->prox = nodo2;
 
-    nodo2->ant = nodo;
     nodo2->valor = 5;
     nodo2->prox = NULL;
 }
@@ -145,9 +139,7 @@ node* intersecaoConjuntos(node *conjunto1, node *conjunto2){
     node *conjuntoFinal = malloc(sizeof(node));
     node *nodoFinal = conjuntoFinal;
     node *nodoAnterior;
-    // [10] [5] [3]
-    // [3] [20] [5]
-    // [3]->[5(NA)]->[&(NF)]
+    
     while(conjunto2){
         if(repetido(conjunto1, conjunto2->valor) == true){
             nodoFinal->valor = conjunto2->valor;
@@ -166,7 +158,39 @@ node* intersecaoConjuntos(node *conjunto1, node *conjunto2){
 }
 
 node* diferencaConjuntos(node *conjunto1, node *conjunto2){
+	node *conjuntoFinal = malloc(sizeof(node));
+    node *nodoFinal = conjuntoFinal;
+    node *nodoAnterior;
+	node *nodoC1 = conjunto1; // Para percorrer a lista corretamente no segundo while
+    
+	while(nodoC1){
+        if(repetido(conjunto2, nodoC1->valor) == false){
+            nodoFinal->valor = nodoC1->valor;
+            nodoFinal->prox = malloc(sizeof(node));
+            nodoAnterior = nodoFinal;
+            nodoFinal = nodoFinal->prox;
+        }
+        if(nodoC1->prox == NULL){
+            break;
+        }
+        nodoC1 = nodoC1->prox;
+    }
+	
+	while(conjunto2){
+        if(repetido(conjunto1, conjunto2->valor) == false){
+            nodoFinal->valor = conjunto2->valor;
+            nodoFinal->prox = malloc(sizeof(node));
+            nodoAnterior = nodoFinal;
+            nodoFinal = nodoFinal->prox;
+        }
+        if(conjunto2->prox == NULL){
+            break;
+        }
+        conjunto2 = conjunto2->prox;
+    }
+    nodoAnterior->prox = NULL;
 
+    return conjuntoFinal;
 }
 
 node* excluiNodo(node *nodo){
