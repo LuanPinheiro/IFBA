@@ -19,7 +19,6 @@ node* unirConjuntos(node *conjunto1, node *conjunto2);
 node* intersecaoConjuntos(node *conjunto1, node *conjunto2);
 node* diferencaConjuntos(node *conjunto1, node *conjunto2);
 node* adicionarNodo(node *nodoAnterior, int valor);
-node* excluiNodo(node *nodo);
 void printaConjunto(node *conjunto);
 int repetido(node *conjunto1, int valor);
 
@@ -191,15 +190,6 @@ node* diferencaConjuntos(node *conjunto1, node *conjunto2){
     nodoAnterior->prox = NULL;
 
     return conjuntoFinal;
-}
-
-node* excluiNodo(node *nodo){
-    node *nodoAux = nodo;
-
-    nodo = nodo->prox;
-    free(nodoAux);
-
-    return nodo;
 }
 
 node* adicionarNodo(node *nodoAnterior, int valor){

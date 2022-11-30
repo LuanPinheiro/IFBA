@@ -48,7 +48,6 @@ void eliminaEmCada3(node *inicioLista, int qtdRemocoes){
 			nodoAnterior = nodo;
 			nodo = nodo->prox;
 		}
-		// 2 4 5
 		nodoAnterior->prox = nodo->prox;
 		nodo = nodo->prox;
 		qtdRemocoes--;
