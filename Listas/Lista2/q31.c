@@ -5,7 +5,6 @@ montagem, onde consta o número de potes a montar de cada cor. Outro
 funcionário monta kits com potes de três cores diferentes. Especifique as es-
 truturas de dados para os tipos de pote e kit. Implemente uma aplicação que
 represente o processo de montagem dos kits.*/
-
 #include <stdio.h>
 #include <stdlib.h>
 

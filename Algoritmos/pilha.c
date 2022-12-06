@@ -24,7 +24,6 @@ no* pilhaRetira(no **topo){
     if(*topo){
         no *remover = *topo;
         *topo = remover->proximo;
-        printf("aqui");
         return remover;
     }
     else{
