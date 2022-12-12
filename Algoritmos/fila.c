@@ -24,3 +24,15 @@ void inserirFila(no **inicioFila, int valor){
         printf("Erro na alocacao da memoria\n");
     }
 }
+
+// Retira o primeiro elemento da fila
+void removerFila(no **inicioFila){
+    no *remover = *inicioFila;
+    if(*inicioFila){
+        *inicioFila = remover->proximo;
+        free(remover);
+    }
+    else{
+        printf("Fila Vazia");
+    }
+}
