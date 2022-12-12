@@ -3,31 +3,29 @@ typedef struct no{
     struct no *proximo;
 }no;
 
-// Adiciona novos valores a uma pilha, estando ela vazia ou não, retorna o novo topo
-no* pilhaNovo(no *topo){
+// Adiciona um novo elemento a uma pilha, estando ela vazia ou não, o topo se torna o novo elemento
+void pilhaNovo(no **topo, int valor){
     no *novo = malloc(sizeof(no));
 
     if(novo){
         printf("Empilhado\n");
-        novo->dado = 5;
-        novo->proximo = topo;
-        return novo;
+        novo->dado = valor;
+        novo->proximo = *topo;
+        *topo = novo;
     }
     else{
         printf("Erro na Alocacao\n");
     }
-    return NULL;
 }
 
-// Retira um elemento da pilha
-no* pilhaRetira(no **topo){
+// Retira um elemento da pilha, e libera a memória do elemento removido
+void pilhaRetira(no **topo){
     if(*topo){
         no *remover = *topo;
         *topo = remover->proximo;
-        return remover;
+        free(remover);
     }
     else{
         printf("Pilha Vazia\n");
     }
-    return NULL;
 }
